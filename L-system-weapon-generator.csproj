@@ -234,7 +234,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\ManagerSingleton.cs" />
-    <Compile Include="Assets\Scripts\Node.cs" />
     <Compile Include="Assets\Scripts\Sword1.cs" />
     <Compile Include="Assets\Scripts\Symbol.cs" />
   </ItemGroup>

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class ManagerSingleton : MonoBehaviour
 {
@@ -13,11 +14,10 @@ public class ManagerSingleton : MonoBehaviour
         }
     }
 
-    public GameObject weapon;
-    public Sword1 sword1;
+    GameObject weapon;
+    Sword1 sword1;
 
-    /***/
-    private GameObject root;
+    List<Symbol> theString;
 
     // Use this for initialization
     void Start()
@@ -28,14 +28,8 @@ public class ManagerSingleton : MonoBehaviour
         weapon.transform.parent = gameObject.transform;
         sword1 = weapon.AddComponent<Sword1>();
 
-        /***/
-        root = new GameObject("Root");
-        GameObject rootObj = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        rootObj.transform.parent = root.transform;
-        Node rootNode = rootObj.AddComponent<Node>();
-        rootNode.symbol = Node.Symbol.C;
-        rootNode.orientation = Vector3.up;
-        rootNode.pDistance = 1.0f;
+        theString = new List<Symbol>();
+        theString.Add(new Symbol('P', new object[] { }));
     }
 
     // Update is called once per frame
@@ -46,12 +40,7 @@ public class ManagerSingleton : MonoBehaviour
 
     public void onIteration()
     {
-        //sword1.SetMesh();
-
-        /***/
-        foreach (var item in root.GetComponentsInChildren<Node>())
-        {
-            item.Iterate();
-        }
+        theString = sword1.RewriteString(theString);
+        sword1.TurtleInterpretation(theString);
     }
 }
