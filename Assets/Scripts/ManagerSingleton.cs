@@ -16,6 +16,7 @@ public class ManagerSingleton : MonoBehaviour
 
     GameObject weapon;
     Sword1 sword1;
+    Spear1 spear1;
 
     List<Symbol> theString;
 
@@ -26,7 +27,8 @@ public class ManagerSingleton : MonoBehaviour
 
         weapon = new GameObject("Weapon Model");
         weapon.transform.parent = gameObject.transform;
-        sword1 = weapon.AddComponent<Sword1>();
+        //sword1 = weapon.AddComponent<Sword1>();
+        spear1 = weapon.AddComponent<Spear1>();
 
         // Axiom
         theString = new List<Symbol>();
@@ -41,10 +43,18 @@ public class ManagerSingleton : MonoBehaviour
 
     public void onIteration()
     {
+        //// sword 1
+        //for (int i = 0; i < 50; i++)
+        //{
+        //    theString = sword1.RewriteString(theString);
+        //    sword1.TurtleInterpretation(theString); 
+        //}
+
+        // spear 1
         for (int i = 0; i < 50; i++)
         {
-            theString = sword1.RewriteString(theString);
-            sword1.TurtleInterpretation(theString); 
+            theString = spear1.RewriteString(theString);
+            spear1.TurtleInterpretation(theString);
         }
     }
 }

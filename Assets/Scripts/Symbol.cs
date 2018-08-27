@@ -1,7 +1,4 @@
-﻿using UnityEngine;
-using System.Collections;
-
-public class Symbol : MonoBehaviour
+﻿public class Symbol
 {
     public string s;
     public object[] p;
@@ -10,17 +7,5 @@ public class Symbol : MonoBehaviour
     {
         this.s = s;
         this.p = p;
-    }
-
-    // Use this for initialization
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 }
