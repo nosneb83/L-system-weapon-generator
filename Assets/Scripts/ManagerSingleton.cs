@@ -28,8 +28,9 @@ public class ManagerSingleton : MonoBehaviour
         weapon.transform.parent = gameObject.transform;
         sword1 = weapon.AddComponent<Sword1>();
 
+        // Axiom
         theString = new List<Symbol>();
-        theString.Add(new Symbol('P', new object[] { }));
+        theString.Add(new Symbol("P", new object[] { 0 }));
     }
 
     // Update is called once per frame
@@ -40,7 +41,10 @@ public class ManagerSingleton : MonoBehaviour
 
     public void onIteration()
     {
-        theString = sword1.RewriteString(theString);
-        sword1.TurtleInterpretation(theString);
+        for (int i = 0; i < 50; i++)
+        {
+            theString = sword1.RewriteString(theString);
+            sword1.TurtleInterpretation(theString); 
+        }
     }
 }

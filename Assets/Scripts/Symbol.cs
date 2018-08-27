@@ -3,13 +3,13 @@ using System.Collections;
 
 public class Symbol : MonoBehaviour
 {
-    public char symbol;
-    public object[] parameter;
+    public string s;
+    public object[] p;
 
-    public Symbol(char s, object[] p)
+    public Symbol(string s, object[] p)
     {
-        symbol = s;
-        parameter = p;
+        this.s = s;
+        this.p = p;
     }
 
     // Use this for initialization
