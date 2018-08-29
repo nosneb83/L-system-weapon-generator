@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using System;
 
-public class Sword1 : MonoBehaviour
+public class Jian : MonoBehaviour
 {
     private Mesh mesh;
     private MeshFilter filter;
@@ -47,66 +46,45 @@ public class Sword1 : MonoBehaviour
                 case "P": // point
                     int age = (int)item.p[0];
 
-                    if (age < 1)
+                    if (age < 12)
                     {
                         newString.Add(new Symbol("[", new object[] { }));
-                        newString.Add(new Symbol("V", new object[] { 1, 0.0f, 1.0f, 0 })); // age, angle, distance ratio
-                        newString.Add(new Symbol("V", new object[] { 1, 45.0f, 1.0f, 0 }));
-                        newString.Add(new Symbol("V", new object[] { 1, 90.0f, 1.0f, 0 }));
-                        newString.Add(new Symbol("V", new object[] { 1, 135.0f, 1.0f, 0 }));
-                        newString.Add(new Symbol("V", new object[] { 1, 180.0f, 1.0f, 0 }));
-                        newString.Add(new Symbol("V", new object[] { 1, 225.0f, 1.0f, 0 }));
-                        newString.Add(new Symbol("V", new object[] { 1, 270.0f, 1.0f, 0 }));
-                        newString.Add(new Symbol("V", new object[] { 1, 315.0f, 1.0f, 0 }));
-                        newString.Add(new Symbol("]", new object[] { }));
-                        newString.Add(new Symbol("U", new object[] { 0.4f })); // distance
-                    }
-                    else if (age < 8)
-                    {
-                        newString.Add(new Symbol("[", new object[] { }));
-                        newString.Add(new Symbol("V", new object[] { 1, 0.0f, 0.3f, 0 })); // age, angle, distance ratio
-                        newString.Add(new Symbol("V", new object[] { 1, 45.0f, 0.3f, 0 }));
-                        newString.Add(new Symbol("V", new object[] { 1, 90.0f, 0.3f, 0 }));
-                        newString.Add(new Symbol("V", new object[] { 1, 135.0f, 0.3f, 0 }));
-                        newString.Add(new Symbol("V", new object[] { 1, 180.0f, 0.3f, 0 }));
-                        newString.Add(new Symbol("V", new object[] { 1, 225.0f, 0.3f, 0 }));
-                        newString.Add(new Symbol("V", new object[] { 1, 270.0f, 0.3f, 0 }));
-                        newString.Add(new Symbol("V", new object[] { 1, 315.0f, 0.3f, 0 }));
+                        newString.Add(new Symbol("V", new object[] { 1, 0.0f, 0.4f, 0 })); // age, angle, distance ratio
+                        newString.Add(new Symbol("V", new object[] { 1, 45.0f, 0.4f, 0 }));
+                        newString.Add(new Symbol("V", new object[] { 1, 90.0f, 0.4f, 0 }));
+                        newString.Add(new Symbol("V", new object[] { 1, 135.0f, 0.4f, 0 }));
+                        newString.Add(new Symbol("V", new object[] { 1, 180.0f, 0.4f, 0 }));
+                        newString.Add(new Symbol("V", new object[] { 1, 225.0f, 0.4f, 0 }));
+                        newString.Add(new Symbol("V", new object[] { 1, 270.0f, 0.4f, 0 }));
+                        newString.Add(new Symbol("V", new object[] { 1, 315.0f, 0.4f, 0 }));
                         newString.Add(new Symbol("]", new object[] { }));
                         newString.Add(new Symbol("U", new object[] { 1.0f })); // distance
                     }
-                    else if (age < 10)
+                    else if (age < 14)
                     {
                         newString.Add(new Symbol("[", new object[] { }));
-                        newString.Add(new Symbol("V", new object[] { 1, 0.0f, 1.1f, 0 })); // age, angle, distance ratio
-                        newString.Add(new Symbol("V", new object[] { 1, 0.0f, 1.1f, 0 })); // age, angle, distance ratio
-                        newString.Add(new Symbol("V", new object[] { 1, 90.0f, 0.3f, 0 }));
-                        newString.Add(new Symbol("V", new object[] { 1, 90.0f, 0.3f, 0 }));
-                        newString.Add(new Symbol("V", new object[] { 1, 180.0f, 1.1f, 0 }));
-                        newString.Add(new Symbol("V", new object[] { 1, 180.0f, 1.1f, 0 }));
-                        newString.Add(new Symbol("V", new object[] { 1, 270.0f, 0.3f, 0 }));
-                        newString.Add(new Symbol("V", new object[] { 1, 270.0f, 0.3f, 0 }));
+                        newString.Add(new Symbol("V", new object[] { 1, 0.0f, 0.8f, 1 })); // age, angle, distance ratio
+                        newString.Add(new Symbol("V", new object[] { 1, 45.0f, 0.8f, 1 }));
+                        newString.Add(new Symbol("V", new object[] { 1, 90.0f, 0.8f, 1 }));
+                        newString.Add(new Symbol("V", new object[] { 1, 135.0f, 0.8f, 1 }));
+                        newString.Add(new Symbol("V", new object[] { 1, 180.0f, 0.8f, 1 }));
+                        newString.Add(new Symbol("V", new object[] { 1, 225.0f, 0.8f, 1 }));
+                        newString.Add(new Symbol("V", new object[] { 1, 270.0f, 0.8f, 1 }));
+                        newString.Add(new Symbol("V", new object[] { 1, 315.0f, 0.8f, 1 }));
                         newString.Add(new Symbol("]", new object[] { }));
-                        if (age == 8)
-                        {
-                            newString.Add(new Symbol("U", new object[] { 1.0f })); // distance
-                        }
-                        else if (age == 9)
-                        {
-                            newString.Add(new Symbol("U", new object[] { 0.0f })); // distance
-                        }
+                        newString.Add(new Symbol("U", new object[] { 0.3f })); // distance
                     }
                     else
                     {
                         newString.Add(new Symbol("[", new object[] { }));
-                        newString.Add(new Symbol("V", new object[] { 1, 0.0f, 1.0f, 1 })); // age, angle, distance ratio
-                        newString.Add(new Symbol("V", new object[] { 1, 0.0f, 1.0f, 1 })); // age, angle, distance ratio
-                        newString.Add(new Symbol("V", new object[] { 1, 90.0f, 0.2f, 1 }));
-                        newString.Add(new Symbol("V", new object[] { 1, 90.0f, 0.2f, 1 }));
-                        newString.Add(new Symbol("V", new object[] { 1, 180.0f, 1.0f, 1 }));
-                        newString.Add(new Symbol("V", new object[] { 1, 180.0f, 1.0f, 1 }));
-                        newString.Add(new Symbol("V", new object[] { 1, 270.0f, 0.2f, 1 }));
-                        newString.Add(new Symbol("V", new object[] { 1, 270.0f, 0.2f, 1 }));
+                        newString.Add(new Symbol("V", new object[] { 1, 0.0f, 0.5f, 2 })); // age, angle, distance ratio
+                        newString.Add(new Symbol("V", new object[] { 1, 0.0f, 0.5f, 2 })); // age, angle, distance ratio
+                        newString.Add(new Symbol("V", new object[] { 1, 90.0f, 0.5f, 2 }));
+                        newString.Add(new Symbol("V", new object[] { 1, 90.0f, 0.5f, 2 }));
+                        newString.Add(new Symbol("V", new object[] { 1, 180.0f, 0.5f, 2 }));
+                        newString.Add(new Symbol("V", new object[] { 1, 180.0f, 0.5f, 2 }));
+                        newString.Add(new Symbol("V", new object[] { 1, 270.0f, 0.5f, 2 }));
+                        newString.Add(new Symbol("V", new object[] { 1, 270.0f, 0.5f, 2 }));
                         newString.Add(new Symbol("]", new object[] { }));
                         newString.Add(new Symbol("U", new object[] { 1.0f })); // distance
                     }
@@ -145,7 +123,8 @@ public class Sword1 : MonoBehaviour
                 case "V":
                     Vector3 newVertex = Vector3.right;
                     newVertex = Quaternion.AngleAxis((float)item.p[1], -Vector3.up) * newVertex; // angle
-                    newVertex *= GeometricSeries((float)item.p[2], 0.7f, (int)item.p[0]);
+                    //newVertex *= GeometricSeries((float)item.p[2], 0.7f, (int)item.p[0]); // angle
+                    newVertex *= (float)item.p[2] * 5.0f;
                     newVertex += turtlePosition;
                     ring.Add(newVertex);
                     //GameObject.CreatePrimitive(PrimitiveType.Sphere).transform.Translate(newVertex);
@@ -200,7 +179,7 @@ public class Sword1 : MonoBehaviour
                     p1 = rings[i][(j + 1) % ringVerNum];
                     p2 = rings[i + 1][j];
                     p3 = rings[i + 1][(j + 1) % ringVerNum];
-                    DrawQuadrangle(p0, p1, p2, p3, i, j);
+                    DrawQuadrangle(p0, p1, p2, p3, i);
                 }
             }
             else // point
@@ -210,7 +189,7 @@ public class Sword1 : MonoBehaviour
                     p0 = rings[i][j];
                     p1 = rings[i][(j + 1) % ringVerNum];
                     p2 = point;
-                    DrawTriangle(p0, p1, p2, j);
+                    DrawTriangle(p0, p1, p2);
                 }
             }
         }
@@ -224,7 +203,7 @@ public class Sword1 : MonoBehaviour
         mesh.RecalculateBounds();
     }
 
-    void DrawTriangle(Vector3 p0, Vector3 p1, Vector3 p2, int j)
+    void DrawTriangle(Vector3 p0, Vector3 p1, Vector3 p2)
     {
         Vector3 normal = Vector3.Cross(p2 - p0, p1 - p0).normalized;
         int triOffset = vertices.Count;
@@ -239,21 +218,12 @@ public class Sword1 : MonoBehaviour
         triangles.Add(triOffset + 2);
         triangles.Add(triOffset + 1);
 
-        if ((j / 2) % 2 == 0)
-        {
-            uvs.Add(new Vector2(0, 0));
-            uvs.Add(new Vector2(1, 0));
-            uvs.Add(new Vector2(0, 1));
-        }
-        else
-        {
-            uvs.Add(new Vector2(1, 0));
-            uvs.Add(new Vector2(0, 0));
-            uvs.Add(new Vector2(0, 1));
-        }
+        uvs.Add(new Vector2(0.5f, 0.75f));
+        uvs.Add(new Vector2(0.5f, 0.75f));
+        uvs.Add(new Vector2(0.5f, 0.75f));
     }
 
-    void DrawQuadrangle(Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3, int i, int j)
+    void DrawQuadrangle(Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3, int i)
     {
         Vector3 normal = Vector3.Cross(p2 - p0, p1 - p0).normalized;
         int triOffset = vertices.Count;
@@ -273,26 +243,26 @@ public class Sword1 : MonoBehaviour
         triangles.Add(triOffset + 2);
         triangles.Add(triOffset + 3);
 
-        if (i < 10)
+        if (i < 11)
         {
-            uvs.Add(new Vector2(0.234f, 0.111f));
-            uvs.Add(new Vector2(0.234f, 0.111f));
-            uvs.Add(new Vector2(0.234f, 0.111f));
-            uvs.Add(new Vector2(0.234f, 0.111f));
+            uvs.Add(new Vector2(0.5f, 0.125f));
+            uvs.Add(new Vector2(0.5f, 0.125f));
+            uvs.Add(new Vector2(0.5f, 0.125f));
+            uvs.Add(new Vector2(0.5f, 0.125f));
         }
-        else if ((j / 2) % 2 == 0)
+        else if (i < 14)
         {
-            uvs.Add(new Vector2(0, 0));
-            uvs.Add(new Vector2(1, 0));
-            uvs.Add(new Vector2(0, 1));
-            uvs.Add(new Vector2(1, 1));
+            uvs.Add(new Vector2(0.5f, 0.375f));
+            uvs.Add(new Vector2(0.5f, 0.375f));
+            uvs.Add(new Vector2(0.5f, 0.375f));
+            uvs.Add(new Vector2(0.5f, 0.375f));
         }
         else
         {
-            uvs.Add(new Vector2(1, 0));
-            uvs.Add(new Vector2(0, 0));
-            uvs.Add(new Vector2(1, 1));
-            uvs.Add(new Vector2(0, 1));
+            uvs.Add(new Vector2(0.5f, 0.75f));
+            uvs.Add(new Vector2(0.5f, 0.75f));
+            uvs.Add(new Vector2(0.5f, 0.75f));
+            uvs.Add(new Vector2(0.5f, 0.75f));
         }
     }
 

@@ -233,6 +233,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Jian.cs" />
     <Compile Include="Assets\Scripts\ManagerSingleton.cs" />
     <Compile Include="Assets\Scripts\Spear1.cs" />
     <Compile Include="Assets\Scripts\Sword1.cs" />
