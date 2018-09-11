@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class ManagerSingleton : MonoBehaviour
 {
     /*** 1. ***/
-    public enum Target { Sword1, Spear1, Jian, Knife1, Knife2, Knife3 };
+    public enum Target { Sword1, Spear1, Jian, Knife1, Knife2, Knife3, KnifeParametric };
     public Target target;
 
     private static ManagerSingleton _instance = null;
@@ -17,15 +17,12 @@ public class ManagerSingleton : MonoBehaviour
             return _instance;
         }
     }
-
-    /*** 2. ***/
+    
     GameObject weapon;
     Sword1 sword1;
     Spear1 spear1;
     Jian jian;
-    Knife1 knife1;
-    Knife2 knife2;
-    Knife3 knife3;
+    Turtle turtle;
 
     List<Symbol> theString;
     public int iter;
@@ -35,10 +32,9 @@ public class ManagerSingleton : MonoBehaviour
     {
         if (Instance != this) Destroy(this);
 
-        /*** 3. ***/
-        target = Target.Knife3;
-
-        /*** 4. ***/
+        /*** 2. ***/
+        target = Target.KnifeParametric;
+        
         weapon = new GameObject("Sword1");
         weapon.transform.parent = gameObject.transform;
         sword1 = weapon.AddComponent<Sword1>();
@@ -51,17 +47,9 @@ public class ManagerSingleton : MonoBehaviour
         weapon.transform.parent = gameObject.transform;
         jian = weapon.AddComponent<Jian>();
 
-        weapon = new GameObject("Knife1");
+        weapon = new GameObject("Weapon");
         weapon.transform.parent = gameObject.transform;
-        knife1 = weapon.AddComponent<Knife1>();
-
-        weapon = new GameObject("Knife2");
-        weapon.transform.parent = gameObject.transform;
-        knife2 = weapon.AddComponent<Knife2>();
-
-        weapon = new GameObject("Knife3");
-        weapon.transform.parent = gameObject.transform;
-        knife3 = weapon.AddComponent<Knife3>();
+        turtle = weapon.AddComponent<Turtle>();
 
         // Axiom
         theString = new List<Symbol>();
@@ -83,7 +71,7 @@ public class ManagerSingleton : MonoBehaviour
 
         switch (target)
         {
-            /*** 5. ***/
+            /*** 3. ***/
             case Target.Sword1:
                 for (int i = 0; i < iter; i++)
                 {
@@ -108,22 +96,29 @@ public class ManagerSingleton : MonoBehaviour
             case Target.Knife1:
                 for (int i = 0; i < 81; i++)
                 {
-                    theString = knife1.RewriteString(theString);
-                    knife1.TurtleInterpretation(theString);
+                    theString = Knife1.RewriteString(theString);
+                    turtle.Interpret(theString);
                 }
                 break;
             case Target.Knife2:
                 for (int i = 0; i < 50; i++)
                 {
-                    theString = knife2.RewriteString(theString);
-                    knife2.TurtleInterpretation(theString);
+                    theString = Knife2.RewriteString(theString);
+                    turtle.Interpret(theString);
                 }
                 break;
             case Target.Knife3:
                 for (int i = 0; i < 50; i++)
                 {
-                    theString = knife3.RewriteString(theString);
-                    knife3.TurtleInterpretation(theString);
+                    theString = Knife3.RewriteString(theString);
+                    turtle.Interpret(theString);
+                }
+                break;
+            case Target.KnifeParametric:
+                for (int i = 0; i < 50; i++)
+                {
+                    theString = KnifeParametric.RewriteString(theString);
+                    turtle.Interpret(theString);
                 }
                 break;
             default:
