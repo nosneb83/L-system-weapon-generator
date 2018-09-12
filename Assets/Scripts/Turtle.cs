@@ -24,7 +24,12 @@ public class Turtle : MonoBehaviour
         Material bladeMaterial = new Material(Shader.Find("Standard (Roughness setup)"));
         bladeMaterial.SetFloat("_Metallic", 1.0f);
         bladeMaterial.SetFloat("_Glossiness", 0.0f);
-        renderer.material = bladeMaterial;
+        renderer.materials = new Material[] { 
+            Resources.Load<Material>("Materials/Knife/Pommel"),
+            Resources.Load<Material>("Materials/Knife/Grip"),
+            Resources.Load<Material>("Materials/Knife/Guard"),
+            Resources.Load<Material>("Materials/Knife/Blade"),
+        };
 
         vertices = new List<Vector3>();
         normals = new List<Vector3>();
@@ -41,17 +46,20 @@ public class Turtle : MonoBehaviour
         List<List<List<Vertex>>> submeshes = new List<List<List<Vertex>>>();
         List<List<Vertex>> rings = new List<List<Vertex>>();
         List<Vertex> ring = new List<Vertex>();
+        List<Vector3> startPoints = new List<Vector3>();
+        List<Vector3> endPoints = new List<Vector3>();
 
-        Vector3 startPoint = turtlePosition;
         foreach (var item in inputString)
         {
             switch (item.s)
             {
                 case "{": // start a submesh
                     rings = new List<List<Vertex>>();
+                    startPoints.Add(turtlePosition);
                     break;
                 case "}": // end a submesh
                     submeshes.Add(rings);
+                    endPoints.Add(turtlePosition);
                     break;
                 case "[": // start a ring
                     ring = new List<Vertex>();
@@ -77,16 +85,21 @@ public class Turtle : MonoBehaviour
                     turtleUp = (Quaternion)item.p[0] * turtleUp;
                     turtleRight = (Quaternion)item.p[0] * turtleRight;
                     break;
+                case "*": // test sphere
+                    GameObject testSphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                    testSphere.transform.localScale = new Vector3((float)item.p[0], (float)item.p[0], (float)item.p[0]);
+                    testSphere.transform.Translate(turtlePosition);
+                    break;
                 default:
                     break;
             }
         }
 
-        SetMesh(submeshes, startPoint, turtlePosition);
+        SetMesh(submeshes, startPoints, endPoints);
         //PrintInputString(inputString);
     }
 
-    void SetMesh(List<List<List<Vertex>>> submeshes, Vector3 startPoint, Vector3 endPoint)
+    void SetMesh(List<List<List<Vertex>>> submeshes, List<Vector3> startPoints, List<Vector3> endPoints)
     {
         mesh.Clear();
         vertices.Clear();
@@ -102,13 +115,13 @@ public class Turtle : MonoBehaviour
             triangleSubmesh = new List<int>();
             for (int j = 0; j < submeshes[i].Count; j++)
             {
-                if (j == 0 && startPoint != null) // start point
+                if (j == 0) // start point
                 {
                     for (int k = 0; k < ringVerNum; k++)
                     {
                         v0 = submeshes[i][j][(k + 1) % ringVerNum];
                         v1 = submeshes[i][j][k];
-                        v2.pos = startPoint;
+                        v2.pos = startPoints[i];
                         DrawTriangle(v0.pos, v1.pos, v2.pos);
                     }
                 }
@@ -123,13 +136,13 @@ public class Turtle : MonoBehaviour
                         DrawQuadrangle(v0.pos, v1.pos, v2.pos, v3.pos, v0.tex, v1.tex, v2.tex, v3.tex);
                     }
                 }
-                else if (endPoint != null) // end point
+                else // end point
                 {
                     for (int k = 0; k < ringVerNum; k++)
                     {
                         v0 = submeshes[i][j][k];
                         v1 = submeshes[i][j][(k + 1) % ringVerNum];
-                        v2.pos = endPoint;
+                        v2.pos = endPoints[i];
                         DrawTriangle(v0.pos, v1.pos, v2.pos);
                     }
                 }
@@ -140,6 +153,7 @@ public class Turtle : MonoBehaviour
         mesh.SetVertices(vertices);
         mesh.SetNormals(normals);
         mesh.SetUVs(0, uvs);
+        mesh.subMeshCount = triangles.Count;
         for (int i = 0; i < triangles.Count; i++)
         {
             mesh.SetTriangles(triangles[i], i);

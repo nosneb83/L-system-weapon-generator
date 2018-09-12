@@ -23,6 +23,7 @@ public class ManagerSingleton : MonoBehaviour
     Spear1 spear1;
     Jian jian;
     Turtle turtle;
+    KnifeParametric knifeParametric;
 
     List<Symbol> theString;
     public int iter;
@@ -49,6 +50,7 @@ public class ManagerSingleton : MonoBehaviour
 
         weapon = new GameObject("Weapon");
         weapon.transform.parent = gameObject.transform;
+        knifeParametric = weapon.AddComponent<KnifeParametric>();
         turtle = weapon.AddComponent<Turtle>();
 
         theString = new List<Symbol>();
@@ -59,14 +61,14 @@ public class ManagerSingleton : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        onIteration();
     }
 
     public void onIteration()
     {
         // Axiom
         theString.Clear();
-        theString.Add(new Symbol("Pommel", new object[] { 5.0f, 3.5f }));
+        theString.Add(new Symbol("Knife", new object[] { }));
 
         switch (target)
         {
@@ -114,9 +116,9 @@ public class ManagerSingleton : MonoBehaviour
                 }
                 break;
             case Target.KnifeParametric:
-                for (int i = 0; i < 50; i++)
+                for (int i = 0; i < knifeParametric.maxIter + 3; i++)
                 {
-                    theString = KnifeParametric.RewriteString(theString);
+                    theString = knifeParametric.RewriteString(theString);
                 }
                 turtle.Interpret(theString);
                 break;
