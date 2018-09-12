@@ -51,9 +51,7 @@ public class ManagerSingleton : MonoBehaviour
         weapon.transform.parent = gameObject.transform;
         turtle = weapon.AddComponent<Turtle>();
 
-        // Axiom
         theString = new List<Symbol>();
-        theString.Add(new Symbol("P", new object[] { 0 }));
 
         iter = 50;
     }
@@ -66,8 +64,9 @@ public class ManagerSingleton : MonoBehaviour
 
     public void onIteration()
     {
+        // Axiom
         theString.Clear();
-        theString.Add(new Symbol("P", new object[] { 0 }));
+        theString.Add(new Symbol("Pommel", new object[] { 5.0f, 3.5f }));
 
         switch (target)
         {
@@ -118,8 +117,8 @@ public class ManagerSingleton : MonoBehaviour
                 for (int i = 0; i < 50; i++)
                 {
                     theString = KnifeParametric.RewriteString(theString);
-                    turtle.Interpret(theString);
                 }
+                turtle.Interpret(theString);
                 break;
             default:
                 break;

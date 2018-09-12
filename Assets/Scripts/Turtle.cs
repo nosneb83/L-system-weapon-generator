@@ -11,7 +11,8 @@ public class Turtle : MonoBehaviour
     private List<Vector3> vertices;
     private List<Vector3> normals;
     private List<Vector2> uvs;
-    private List<int> triangles;
+    private List<List<int>> triangles;
+    private List<int> triangleSubmesh;
 
     void Start()
     {
@@ -28,7 +29,7 @@ public class Turtle : MonoBehaviour
         vertices = new List<Vector3>();
         normals = new List<Vector3>();
         uvs = new List<Vector2>();
-        triangles = new List<int>();
+        triangles = new List<List<int>>();
     }
 
     public void Interpret(List<Symbol> inputString)
@@ -37,6 +38,7 @@ public class Turtle : MonoBehaviour
         Vector3 turtleForword = Vector3.forward;
         Vector3 turtleUp = Vector3.up;
         Vector3 turtleRight = Vector3.right;
+        List<List<List<Vertex>>> submeshes = new List<List<List<Vertex>>>();
         List<List<Vertex>> rings = new List<List<Vertex>>();
         List<Vertex> ring = new List<Vertex>();
 
@@ -45,6 +47,12 @@ public class Turtle : MonoBehaviour
         {
             switch (item.s)
             {
+                case "{": // start a submesh
+                    rings = new List<List<Vertex>>();
+                    break;
+                case "}": // end a submesh
+                    submeshes.Add(rings);
+                    break;
                 case "[": // start a ring
                     ring = new List<Vertex>();
                     break;
@@ -74,10 +82,11 @@ public class Turtle : MonoBehaviour
             }
         }
 
-        SetMesh(rings, startPoint, turtlePosition);
+        SetMesh(submeshes, startPoint, turtlePosition);
+        //PrintInputString(inputString);
     }
 
-    void SetMesh(List<List<Vertex>> rings, Vector3 startPoint, Vector3 endPoint)
+    void SetMesh(List<List<List<Vertex>>> submeshes, Vector3 startPoint, Vector3 endPoint)
     {
         mesh.Clear();
         vertices.Clear();
@@ -87,46 +96,54 @@ public class Turtle : MonoBehaviour
 
         Vertex v0, v1, v2, v3;
 
-        int ringVerNum = rings[0].Count; // total number of vertices in a ring
-        for (int i = 0; i < rings.Count; i++)
+        for (int i = 0; i < submeshes.Count; i++)
         {
-            if (i == 0 && startPoint != null) // start point
+            int ringVerNum = submeshes[i][0].Count; // total number of vertices in a ring
+            triangleSubmesh = new List<int>();
+            for (int j = 0; j < submeshes[i].Count; j++)
             {
-                for (int j = 0; j < ringVerNum; j++)
+                if (j == 0 && startPoint != null) // start point
                 {
-                    v0 = rings[i][(j + 1) % ringVerNum];
-                    v1 = rings[i][j];
-                    v2.pos = startPoint;
-                    DrawTriangle(v0.pos, v1.pos, v2.pos);
+                    for (int k = 0; k < ringVerNum; k++)
+                    {
+                        v0 = submeshes[i][j][(k + 1) % ringVerNum];
+                        v1 = submeshes[i][j][k];
+                        v2.pos = startPoint;
+                        DrawTriangle(v0.pos, v1.pos, v2.pos);
+                    }
+                }
+                if (j < submeshes[i].Count - 1) // between rings
+                {
+                    for (int k = 0; k < ringVerNum; k++)
+                    {
+                        v0 = submeshes[i][j][k];
+                        v1 = submeshes[i][j][(k + 1) % ringVerNum];
+                        v2 = submeshes[i][j + 1][k];
+                        v3 = submeshes[i][j + 1][(k + 1) % ringVerNum];
+                        DrawQuadrangle(v0.pos, v1.pos, v2.pos, v3.pos, v0.tex, v1.tex, v2.tex, v3.tex);
+                    }
+                }
+                else if (endPoint != null) // end point
+                {
+                    for (int k = 0; k < ringVerNum; k++)
+                    {
+                        v0 = submeshes[i][j][k];
+                        v1 = submeshes[i][j][(k + 1) % ringVerNum];
+                        v2.pos = endPoint;
+                        DrawTriangle(v0.pos, v1.pos, v2.pos);
+                    }
                 }
             }
-            if (i < rings.Count - 1) // between rings
-            {
-                for (int j = 0; j < ringVerNum; j++)
-                {
-                    v0 = rings[i][j];
-                    v1 = rings[i][(j + 1) % ringVerNum];
-                    v2 = rings[i + 1][j];
-                    v3 = rings[i + 1][(j + 1) % ringVerNum];
-                    DrawQuadrangle(v0.pos, v1.pos, v2.pos, v3.pos, v0.tex, v1.tex, v2.tex, v3.tex);
-                }
-            }
-            else if (endPoint != null) // end point
-            {
-                for (int j = 0; j < ringVerNum; j++)
-                {
-                    v0 = rings[i][j];
-                    v1 = rings[i][(j + 1) % ringVerNum];
-                    v2.pos = endPoint;
-                    DrawTriangle(v0.pos, v1.pos, v2.pos);
-                }
-            }
+            triangles.Add(triangleSubmesh);
         }
 
         mesh.SetVertices(vertices);
         mesh.SetNormals(normals);
         mesh.SetUVs(0, uvs);
-        mesh.SetTriangles(triangles, 0);
+        for (int i = 0; i < triangles.Count; i++)
+        {
+            mesh.SetTriangles(triangles[i], i);
+        }
 
         mesh.RecalculateNormals();
         mesh.RecalculateBounds();
@@ -162,9 +179,9 @@ public class Turtle : MonoBehaviour
         normals.Add(normal);
         vertices.Add(p2);
         normals.Add(normal);
-        triangles.Add(triOffset);
-        triangles.Add(triOffset + 2);
-        triangles.Add(triOffset + 1);
+        triangleSubmesh.Add(triOffset);
+        triangleSubmesh.Add(triOffset + 2);
+        triangleSubmesh.Add(triOffset + 1);
 
         uvs.Add(GetUV(2));
         uvs.Add(GetUV(2));
@@ -192,12 +209,12 @@ public class Turtle : MonoBehaviour
         uvs.Add(GetUV(t3));
         normals.Add(normal);
 
-        triangles.Add(triOffset);
-        triangles.Add(triOffset + 2);
-        triangles.Add(triOffset + 1);
-        triangles.Add(triOffset + 1);
-        triangles.Add(triOffset + 2);
-        triangles.Add(triOffset + 3);
+        triangleSubmesh.Add(triOffset);
+        triangleSubmesh.Add(triOffset + 2);
+        triangleSubmesh.Add(triOffset + 1);
+        triangleSubmesh.Add(triOffset + 1);
+        triangleSubmesh.Add(triOffset + 2);
+        triangleSubmesh.Add(triOffset + 3);
     }
 
     Vector2 GetUV(int tex)
