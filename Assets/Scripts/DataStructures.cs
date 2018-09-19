@@ -16,12 +16,12 @@ public struct Symbol
 public struct Vertex
 {
     public Vector3 pos;
-    public int tex;
+    public Vector2 uv;
 
-    public Vertex(Vector3 pos, int tex)
+    public Vertex(Vector3 pos, Vector2 uv)
     {
         this.pos = pos;
-        this.tex = tex;
+        this.uv = uv;
     }
 }
 

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class ManagerSingleton : MonoBehaviour
 {
     /*** 1. ***/
-    public enum Target { Sword1, Spear1, Jian, Knife1, Knife2, Knife3, KnifeParametric };
+    public enum Target { Sword1, Spear1, Jian, Knife1, Knife2, Knife3, KnifeParametric, Spear };
     public Target target;
 
     private static ManagerSingleton _instance = null;
@@ -34,7 +34,7 @@ public class ManagerSingleton : MonoBehaviour
         if (Instance != this) Destroy(this);
 
         /*** 2. ***/
-        target = Target.KnifeParametric;
+        target = Target.Spear;
         
         weapon = new GameObject("Sword1");
         weapon.transform.parent = gameObject.transform;
@@ -66,14 +66,13 @@ public class ManagerSingleton : MonoBehaviour
 
     public void onIteration()
     {
-        // Axiom
         theString.Clear();
-        theString.Add(new Symbol("Knife", new object[] { }));
 
         switch (target)
         {
             /*** 3. ***/
             case Target.Sword1:
+                theString.Add(new Symbol("Knife", new object[] { })); // Axiom
                 for (int i = 0; i < iter; i++)
                 {
                     theString = sword1.RewriteString(theString);
@@ -81,6 +80,7 @@ public class ManagerSingleton : MonoBehaviour
                 }
                 break;
             case Target.Spear1:
+                theString.Add(new Symbol("Knife", new object[] { })); // Axiom
                 for (int i = 0; i < iter; i++)
                 {
                     theString = spear1.RewriteString(theString);
@@ -88,6 +88,7 @@ public class ManagerSingleton : MonoBehaviour
                 }
                 break;
             case Target.Jian:
+                theString.Add(new Symbol("Knife", new object[] { })); // Axiom
                 for (int i = 0; i < iter; i++)
                 {
                     theString = jian.RewriteString(theString);
@@ -95,6 +96,7 @@ public class ManagerSingleton : MonoBehaviour
                 }
                 break;
             case Target.Knife1:
+                theString.Add(new Symbol("Knife", new object[] { })); // Axiom
                 for (int i = 0; i < 81; i++)
                 {
                     theString = Knife1.RewriteString(theString);
@@ -102,6 +104,7 @@ public class ManagerSingleton : MonoBehaviour
                 }
                 break;
             case Target.Knife2:
+                theString.Add(new Symbol("Knife", new object[] { })); // Axiom
                 for (int i = 0; i < 50; i++)
                 {
                     theString = Knife2.RewriteString(theString);
@@ -109,6 +112,7 @@ public class ManagerSingleton : MonoBehaviour
                 }
                 break;
             case Target.Knife3:
+                theString.Add(new Symbol("Knife", new object[] { })); // Axiom
                 for (int i = 0; i < 50; i++)
                 {
                     theString = Knife3.RewriteString(theString);
@@ -116,9 +120,18 @@ public class ManagerSingleton : MonoBehaviour
                 }
                 break;
             case Target.KnifeParametric:
+                theString.Add(new Symbol("Knife", new object[] { })); // Axiom
                 for (int i = 0; i < knifeParametric.maxIter + 3; i++)
                 {
                     theString = knifeParametric.RewriteString(theString);
+                }
+                turtle.Interpret(theString);
+                break;
+            case Target.Spear:
+                theString.Add(new Symbol("Spear", new object[] { })); // Axiom
+                for (int i = 0; i < knifeParametric.maxIter + 3; i++)
+                {
+                    theString = knifeParametric.RewriteStringSpear(theString);
                 }
                 turtle.Interpret(theString);
                 break;

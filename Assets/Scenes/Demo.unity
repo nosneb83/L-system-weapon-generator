@@ -579,7 +579,7 @@ Light:
   serializedVersion: 8
   m_Type: 1
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
-  m_Intensity: 50
+  m_Intensity: 2
   m_Range: 10
   m_SpotAngle: 30
   m_CookieSize: 10
@@ -658,6 +658,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f78ae7226489eb40acab48b359eea35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  target: 0
   iter: 0
 --- !u!1 &1882992949
 GameObject:
