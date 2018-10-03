@@ -23,7 +23,7 @@ public class Sword1 : MonoBehaviour
         renderer = gameObject.AddComponent<MeshRenderer>();
 
         Material bladeMaterial = new Material(Shader.Find("Standard"));
-        renderer.material = bladeMaterial;
+        renderer.material = Resources.Load<Material>("Materials/Sword1");
 
         vertices = new List<Vector3>();
         normals = new List<Vector3>();

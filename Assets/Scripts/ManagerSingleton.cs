@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class ManagerSingleton : MonoBehaviour
 {
     /*** 1. ***/
-    public enum Target { Sword1, Spear1, Jian, Knife1, Knife2, Knife3, KnifeParametric, Spear };
+    public enum Target { Sword1, Spear1, Jian, Knife1, Knife2, Knife3, KnifeParametric, Spear, Crescent };
     public Target target;
 
     private static ManagerSingleton _instance = null;
@@ -22,11 +22,13 @@ public class ManagerSingleton : MonoBehaviour
     Sword1 sword1;
     Spear1 spear1;
     Jian jian;
-    Turtle turtle;
+    TurtleInterpretation turtle;
     KnifeParametric knifeParametric;
 
     List<Symbol> theString;
     public int iter;
+    int t;
+    bool run;
 
     // Use this for initialization
     void Start()
@@ -34,7 +36,7 @@ public class ManagerSingleton : MonoBehaviour
         if (Instance != this) Destroy(this);
 
         /*** 2. ***/
-        target = Target.Spear;
+        target = Target.Crescent;
         
         weapon = new GameObject("Sword1");
         weapon.transform.parent = gameObject.transform;
@@ -51,11 +53,15 @@ public class ManagerSingleton : MonoBehaviour
         weapon = new GameObject("Weapon");
         weapon.transform.parent = gameObject.transform;
         knifeParametric = weapon.AddComponent<KnifeParametric>();
-        turtle = weapon.AddComponent<Turtle>();
+        turtle = weapon.AddComponent<TurtleInterpretation>();
 
         theString = new List<Symbol>();
 
         iter = 50;
+        t = 0;
+        run = false;
+
+        turtle.GetCurvePoints(new Turtle(Vector3.zero, Vector3.forward, Vector3.up, Vector3.right), 1.0f, 2.0f, 20);
     }
 
     // Update is called once per frame
@@ -64,23 +70,44 @@ public class ManagerSingleton : MonoBehaviour
         onIteration();
     }
 
+    //private void FixedUpdate()
+    //{
+    //    if (run)
+    //    {
+    //        onIteration();
+    //        if (t == iter)
+    //        {
+    //            run = false;
+    //        }
+    //        else
+    //        {
+    //            t++;
+    //        }
+    //    }
+    //    else
+    //    {
+    //        t = 0;
+    //    }
+    //}
+
     public void onIteration()
     {
         theString.Clear();
+        run = true;
 
         switch (target)
         {
             /*** 3. ***/
             case Target.Sword1:
-                theString.Add(new Symbol("Knife", new object[] { })); // Axiom
-                for (int i = 0; i < iter; i++)
+                theString.Add(new Symbol("P", new object[] { 0 })); // Axiom
+                for (int i = 0; i < t; i++)
                 {
                     theString = sword1.RewriteString(theString);
                     sword1.TurtleInterpretation(theString);
                 }
                 break;
             case Target.Spear1:
-                theString.Add(new Symbol("Knife", new object[] { })); // Axiom
+                theString.Add(new Symbol("P", new object[] { 0 })); // Axiom
                 for (int i = 0; i < iter; i++)
                 {
                     theString = spear1.RewriteString(theString);
@@ -88,8 +115,8 @@ public class ManagerSingleton : MonoBehaviour
                 }
                 break;
             case Target.Jian:
-                theString.Add(new Symbol("Knife", new object[] { })); // Axiom
-                for (int i = 0; i < iter; i++)
+                theString.Add(new Symbol("P", new object[] { 0 })); // Axiom
+                for (int i = 0; i < t; i++)
                 {
                     theString = jian.RewriteString(theString);
                     jian.TurtleInterpretation(theString);
@@ -132,6 +159,14 @@ public class ManagerSingleton : MonoBehaviour
                 for (int i = 0; i < knifeParametric.maxIter + 3; i++)
                 {
                     theString = knifeParametric.RewriteStringSpear(theString);
+                }
+                turtle.Interpret(theString);
+                break;
+            case Target.Crescent:
+                theString.Add(new Symbol("Crescent", new object[] { })); // Axiom
+                for (int i = 0; i < knifeParametric.maxIter + 3; i++)
+                {
+                    theString = knifeParametric.RewriteStringCrescent(theString);
                 }
                 turtle.Interpret(theString);
                 break;

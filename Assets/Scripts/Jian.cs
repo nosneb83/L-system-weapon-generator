@@ -22,7 +22,7 @@ public class Jian : MonoBehaviour
         renderer = gameObject.AddComponent<MeshRenderer>();
 
         Material bladeMaterial = new Material(Shader.Find("Standard"));
-        renderer.material = bladeMaterial;
+        renderer.material = Resources.Load<Material>("Materials/Jian");
 
         vertices = new List<Vector3>();
         normals = new List<Vector3>();

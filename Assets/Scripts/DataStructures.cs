@@ -25,6 +25,30 @@ public struct Vertex
     }
 }
 
+public struct Turtle
+{
+    public Vector3 p; // position
+    public Vector3 f; // forward
+    public Vector3 u; // up
+    public Vector3 r; // right
+
+    public Turtle(Vector3 p, Vector3 f, Vector3 u, Vector3 r)
+    {
+        this.p = p;
+        this.f = f;
+        this.u = u;
+        this.r = r;
+    }
+
+    public Turtle(Turtle oldTurtle)
+    {
+        p = oldTurtle.p;
+        f = oldTurtle.f;
+        u = oldTurtle.u;
+        r = oldTurtle.r;
+    }
+}
+
 //public interface ILSystemRule
 //{
 //    List<Symbol> RewriteString(List<Symbol> inputString);
