@@ -47,6 +47,29 @@ public struct Turtle
         u = oldTurtle.u;
         r = oldTurtle.r;
     }
+
+    public void Go(Vector3 direction, float distance)
+    {
+        p += direction.normalized * distance;
+    }
+
+    public void RotateAroundForward(float angle)
+    {
+        u = (Quaternion.AngleAxis(angle, f) * u).normalized;
+        r = (Quaternion.AngleAxis(angle, f) * r).normalized;
+    }
+
+    public void RotateAroundUp(float angle)
+    {
+        f = (Quaternion.AngleAxis(angle, u) * f).normalized;
+        r = (Quaternion.AngleAxis(angle, u) * r).normalized;
+    }
+
+    public void RotateAroundRight(float angle)
+    {
+        f = (Quaternion.AngleAxis(angle, r) * f).normalized;
+        u = (Quaternion.AngleAxis(angle, r) * u).normalized;
+    }
 }
 
 //public interface ILSystemRule

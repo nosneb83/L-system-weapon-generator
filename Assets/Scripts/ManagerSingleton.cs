@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class ManagerSingleton : MonoBehaviour
 {
     /*** 1. ***/
-    public enum Target { Sword1, Spear1, Jian, Knife1, Knife2, Knife3, KnifeParametric, Spear, Crescent };
+    public enum Target { Sword1, Spear1, Jian, Knife1, Knife2, Knife3, KnifeParametric, Spear, Crescent, Axe };
     public Target target;
 
     private static ManagerSingleton _instance = null;
@@ -36,7 +36,7 @@ public class ManagerSingleton : MonoBehaviour
         if (Instance != this) Destroy(this);
 
         /*** 2. ***/
-        target = Target.Crescent;
+        target = Target.Axe;
         
         weapon = new GameObject("Sword1");
         weapon.transform.parent = gameObject.transform;
@@ -60,8 +60,6 @@ public class ManagerSingleton : MonoBehaviour
         iter = 50;
         t = 0;
         run = false;
-
-        turtle.GetCurvePoints(new Turtle(Vector3.zero, Vector3.forward, Vector3.up, Vector3.right), 1.0f, 2.0f, 20);
     }
 
     // Update is called once per frame
@@ -167,6 +165,14 @@ public class ManagerSingleton : MonoBehaviour
                 for (int i = 0; i < knifeParametric.maxIter + 3; i++)
                 {
                     theString = knifeParametric.RewriteStringCrescent(theString);
+                }
+                turtle.Interpret(theString);
+                break;
+            case Target.Axe:
+                theString.Add(new Symbol("Axe", new object[] { })); // Axiom
+                for (int i = 0; i < knifeParametric.maxIter + 3; i++)
+                {
+                    theString = knifeParametric.RewriteStringAxe(theString);
                 }
                 turtle.Interpret(theString);
                 break;

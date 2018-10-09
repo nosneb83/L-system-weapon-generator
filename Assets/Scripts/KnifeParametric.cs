@@ -365,4 +365,54 @@ public class KnifeParametric : MonoBehaviour
 
         return newString;
     }
+
+
+
+    public List<Symbol> RewriteStringAxe(List<Symbol> inputString)
+    {
+        List<Symbol> newString = new List<Symbol>();
+        foreach (var item in inputString)
+        {
+            switch (item.s)
+            {
+                case "Axe":
+                    newString.Add(new Symbol("Pommel", new object[] { pommelOuterDiameter, pommelInnerDiameter }));
+                    newString.Add(new Symbol("Grip", new object[] { spearGripWidth / 2.0f }));
+                    newString.Add(new Symbol("Guard", new object[] { guardWidth / 2.0f }));
+                    newString.Add(new Symbol("Blade", new object[] { }));
+                    break;
+
+                case "Pommel": // dummy
+                    newString.Add(new Symbol("{", new object[] { })); // start submesh
+                    newString.Add(new Symbol("[", new object[] { }));
+                    newString.Add(new Symbol("]", new object[] { }));
+                    newString.Add(new Symbol("}", new object[] { })); // end submesh
+                    break;
+
+                case "Grip": // dummy
+                    newString.Add(new Symbol("{", new object[] { })); // start submesh
+                    newString.Add(new Symbol("[", new object[] { }));
+                    newString.Add(new Symbol("]", new object[] { }));
+                    newString.Add(new Symbol("}", new object[] { })); // end submesh
+                    break;
+
+                case "Guard": // dummy
+                    newString.Add(new Symbol("{", new object[] { })); // start submesh
+                    newString.Add(new Symbol("[", new object[] { }));
+                    newString.Add(new Symbol("]", new object[] { }));
+                    newString.Add(new Symbol("}", new object[] { })); // end submesh
+                    break;
+
+                case "Blade":
+                    newString.Add(new Symbol("axe", new object[] { crescentL, crescentW, crescentD, bladeCurv, circleSubdivision }));
+                    break;
+
+                default:
+                    newString.Add(item);
+                    break;
+            }
+        }
+
+        return newString;
+    }
 }

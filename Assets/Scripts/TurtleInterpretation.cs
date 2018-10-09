@@ -91,16 +91,19 @@ public class TurtleInterpretation : MonoBehaviour
                     turtle.p += turtle.f * (float)sy.p[0];
                     break;
                 case "rf": // rotation around forward vector
-                    turtle.u = Quaternion.AngleAxis((float)sy.p[0], turtle.f) * turtle.u;
-                    turtle.r = Quaternion.AngleAxis((float)sy.p[0], turtle.f) * turtle.r;
+                    //turtle.u = Quaternion.AngleAxis((float)sy.p[0], turtle.f) * turtle.u;
+                    //turtle.r = Quaternion.AngleAxis((float)sy.p[0], turtle.f) * turtle.r;
+                    turtle.RotateAroundForward((float)sy.p[0]);
                     break;
                 case "ru": // rotation around up vector
-                    turtle.f = Quaternion.AngleAxis((float)sy.p[0], turtle.u) * turtle.f;
-                    turtle.r = Quaternion.AngleAxis((float)sy.p[0], turtle.u) * turtle.r;
+                    //turtle.f = Quaternion.AngleAxis((float)sy.p[0], turtle.u) * turtle.f;
+                    //turtle.r = Quaternion.AngleAxis((float)sy.p[0], turtle.u) * turtle.r;
+                    turtle.RotateAroundUp((float)sy.p[0]);
                     break;
                 case "rr": // rotation around right vector
-                    turtle.f = Quaternion.AngleAxis((float)sy.p[0], turtle.r) * turtle.f;
-                    turtle.u = Quaternion.AngleAxis((float)sy.p[0], turtle.r) * turtle.u;
+                    //turtle.f = Quaternion.AngleAxis((float)sy.p[0], turtle.r) * turtle.f;
+                    //turtle.u = Quaternion.AngleAxis((float)sy.p[0], turtle.r) * turtle.u;
+                    turtle.RotateAroundRight((float)sy.p[0]);
                     break;
                 case "crescent": // l, w, d(0~1), t, edgeRatio, subdivision
                     // push turtle
@@ -118,6 +121,23 @@ public class TurtleInterpretation : MonoBehaviour
                     turtle = turtles.Pop();
 
                     break;
+
+                case "axe": // length, width, thick, curve, subdivision
+                    startPoints.Add(turtle.p);
+                    endPoints.Add(turtle.p + turtle.f * (float)sy.p[0]);
+
+                    // push turtle
+                    turtles.Push(turtle);
+                    turtle = new Turtle(turtle);
+
+                    // axe
+                    submeshes.Add(Axe((float)sy.p[0], (float)sy.p[1], (float)sy.p[2], (float)sy.p[3], (int)sy.p[4]));
+
+                    // pop turtle
+                    turtle = turtles.Pop();
+
+                    break;
+
                 case "*": // test sphere
                     GameObject testSphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
                     testSphere.transform.localScale = new Vector3((float)sy.p[0], (float)sy.p[0], (float)sy.p[0]);
@@ -360,7 +380,7 @@ public class TurtleInterpretation : MonoBehaviour
         triangleSubmesh.Add(triOffset + 0);
     }
 
-    public List<Vector3> GetCurvePoints(Turtle turtle, float l, float w, int subdivision)
+    public List<Vector3> GetArcPoints(Turtle turtle, float l, float w, int subdivision)
     {
         List<Vector3> curvePoints = new List<Vector3>();
 
@@ -390,13 +410,27 @@ public class TurtleInterpretation : MonoBehaviour
         return curvePoints;
     }
 
+    public List<Vector3> GetCurvePoints(Turtle turtle, float l, float t, float c, int s)
+    {
+        List<Vector3> curvePoints = new List<Vector3>();
+
+        for (int i = 0; i <= s; i++)
+        {
+            curvePoints.Add(turtle.p + turtle.u * t / 2 * (s - i) / s);
+            turtle.Go(turtle.f, l / s);
+            turtle.RotateAroundUp(c);
+        }
+
+        return curvePoints;
+    }
+
     private List<List<Vertex>> Crescent(float l, float w, float d, float thick, float edgeRatio, int subdivision)
     {
         List<List<Vertex>> rings = new List<List<Vertex>>();
 
-        List<Vector3> outerArc = GetCurvePoints(new Turtle(turtle), l, w, subdivision);
+        List<Vector3> outerArc = GetArcPoints(new Turtle(turtle), l, w, subdivision);
         turtle.p += turtle.f * l * d;
-        List<Vector3> innerArc = GetCurvePoints(new Turtle(turtle), l * (1.0f - d), w, subdivision);
+        List<Vector3> innerArc = GetArcPoints(new Turtle(turtle), l * (1.0f - d), w, subdivision);
         //foreach (var item in outerArc)
         //{
         //    GameObject o = GameObject.CreatePrimitive(PrimitiveType.Sphere);
@@ -436,6 +470,48 @@ public class TurtleInterpretation : MonoBehaviour
             newVertex.uv = new Vector2(newVertex.pos.x / 10.0f, newVertex.pos.z / 10.0f);
             ring.Add(newVertex);
 
+            rings.Add(ring);
+        }
+
+        return rings;
+    }
+
+    private List<List<Vertex>> Axe(float l, float w, float t, float c, int s)
+    {
+        List<List<Vertex>> rings = new List<List<Vertex>>();
+
+        List<List<Vector3>> curves = new List<List<Vector3>>();
+        List<Turtle> axeTurtles = new List<Turtle>();
+        for (int i = 0; i <= s; i++)
+        {
+            Turtle newTurtle = new Turtle(turtle);
+            newTurtle.Go(-newTurtle.r, w / 2.0f);
+            newTurtle.Go(newTurtle.r, w * i / s);
+            axeTurtles.Add(newTurtle);
+        }
+
+        for (int i = 0; i <= s; i++)
+        {
+            curves.Add(GetCurvePoints(new Turtle(axeTurtles[i]), l, t, -c + (2 * c) * i / s, s));
+        }
+        axeTurtles.Reverse();
+        for (int i = 0; i <= s; i++)
+        {
+            curves.Add(GetCurvePoints(new Turtle(axeTurtles[i]), l, -t, c - (2 * c) * i / s, s));
+        }
+
+        List<Vertex> ring;
+        Vertex newVertex;
+        for (int i = 0; i <= s; i++)
+        {
+            ring = new List<Vertex>();
+            for (int j = 0; j < curves.Count; j++)
+            {
+                newVertex = new Vertex();
+                newVertex.pos = curves[j][i];
+                newVertex.uv = new Vector2(newVertex.pos.x / 10.0f, newVertex.pos.z / 10.0f);
+                ring.Add(newVertex);
+            }
             rings.Add(ring);
         }
 
