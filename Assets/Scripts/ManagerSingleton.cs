@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class ManagerSingleton : MonoBehaviour
 {
     /*** 1. ***/
-    public enum Target { Sword1, Spear1, Jian, Knife1, Knife2, Knife3, KnifeParametric, Spear, Crescent, Axe };
+    public enum Target { Sword1, Spear1, Jian, Knife1, Knife2, Knife3, KnifeParametric, Spear, Crescent, Axe, Fork };
     public Target target;
 
     private static ManagerSingleton _instance = null;
@@ -36,7 +36,7 @@ public class ManagerSingleton : MonoBehaviour
         if (Instance != this) Destroy(this);
 
         /*** 2. ***/
-        target = Target.Axe;
+        target = Target.Fork;
         
         weapon = new GameObject("Sword1");
         weapon.transform.parent = gameObject.transform;
@@ -173,6 +173,14 @@ public class ManagerSingleton : MonoBehaviour
                 for (int i = 0; i < knifeParametric.maxIter + 3; i++)
                 {
                     theString = knifeParametric.RewriteStringAxe(theString);
+                }
+                turtle.Interpret(theString);
+                break;
+            case Target.Fork:
+                theString.Add(new Symbol("Fork", new object[] { })); // Axiom
+                for (int i = 0; i < knifeParametric.maxIter + 3; i++)
+                {
+                    theString = knifeParametric.RewriteStringFork(theString);
                 }
                 turtle.Interpret(theString);
                 break;

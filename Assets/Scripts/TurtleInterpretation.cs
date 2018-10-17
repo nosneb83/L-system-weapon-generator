@@ -32,6 +32,11 @@ public class TurtleInterpretation : MonoBehaviour
             ,Resources.Load<Material>("Materials/Knife/Guard")
             ,Resources.Load<Material>("Materials/Knife/Blade")
             ,Resources.Load<Material>("Materials/Knife/Blade")
+            ,Resources.Load<Material>("Materials/Knife/Blade")
+            ,Resources.Load<Material>("Materials/Knife/Blade")
+            ,Resources.Load<Material>("Materials/Knife/Blade")
+            ,Resources.Load<Material>("Materials/Knife/Blade")
+            ,Resources.Load<Material>("Materials/Knife/Blade")
         };
 
         vertices = new List<Vector3>();
@@ -123,6 +128,22 @@ public class TurtleInterpretation : MonoBehaviour
                     break;
 
                 case "axe": // length, width, thick, curve, subdivision
+                    startPoints.Add(turtle.p);
+                    endPoints.Add(turtle.p + turtle.f * (float)sy.p[0]);
+
+                    // push turtle
+                    turtles.Push(turtle);
+                    turtle = new Turtle(turtle);
+
+                    // axe
+                    submeshes.Add(Axe((float)sy.p[0], (float)sy.p[1], (float)sy.p[2], (float)sy.p[3], (int)sy.p[4]));
+
+                    // pop turtle
+                    turtle = turtles.Pop();
+
+                    break;
+
+                case "fork": // length, width, thick, curve, subdivision
                     startPoints.Add(turtle.p);
                     endPoints.Add(turtle.p + turtle.f * (float)sy.p[0]);
 

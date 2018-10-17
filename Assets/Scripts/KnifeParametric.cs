@@ -20,7 +20,7 @@ public class KnifeParametric : MonoBehaviour
     [Range(0.0f, 1.0f)]
     public float bladeWidthFactorB = 0.0f;
     public float bladeThick = 0.2f;
-    [Range(-3.0f, 3.0f)]
+    [Range(-5.0f, 5.0f)]
     public float bladeCurv = 0.0f;
     [Range(0.0f, 1.0f)]
     public float edgeRatio = 0.15f;
@@ -366,8 +366,6 @@ public class KnifeParametric : MonoBehaviour
         return newString;
     }
 
-
-
     public List<Symbol> RewriteStringAxe(List<Symbol> inputString)
     {
         List<Symbol> newString = new List<Symbol>();
@@ -405,6 +403,129 @@ public class KnifeParametric : MonoBehaviour
 
                 case "Blade":
                     newString.Add(new Symbol("axe", new object[] { crescentL, crescentW, crescentD, bladeCurv, circleSubdivision }));
+                    break;
+
+                default:
+                    newString.Add(item);
+                    break;
+            }
+        }
+
+        return newString;
+    }
+
+    public List<Symbol> RewriteStringFork(List<Symbol> inputString)
+    {
+        List<Symbol> newString = new List<Symbol>();
+        foreach (var item in inputString)
+        {
+            switch (item.s)
+            {
+                case "Fork":
+                    newString.Add(new Symbol("Pommel", new object[] { pommelOuterDiameter, pommelInnerDiameter }));
+                    newString.Add(new Symbol("Grip", new object[] { spearGripWidth / 2.0f }));
+                    newString.Add(new Symbol("Guard", new object[] { guardWidth / 2.0f }));
+                    newString.Add(new Symbol("Blade", new object[] { }));
+                    break;
+
+                case "Pommel": // dummy
+                    newString.Add(new Symbol("{", new object[] { })); // start submesh
+                    newString.Add(new Symbol("[", new object[] { }));
+                    newString.Add(new Symbol("]", new object[] { }));
+                    newString.Add(new Symbol("}", new object[] { })); // end submesh
+                    break;
+
+                case "Grip":
+                    newString.Add(new Symbol("{", new object[] { })); // start submesh
+                    newString.Add(new Symbol("Circle", new object[] { item.p[0] }));
+                    newString.Add(new Symbol("F", new object[] { gripLength }));
+                    newString.Add(new Symbol("Circle", new object[] { item.p[0] }));
+                    newString.Add(new Symbol("}", new object[] { })); // end submesh
+                    break;
+
+                case "Guard": // dummy
+                    newString.Add(new Symbol("{", new object[] { })); // start submesh
+                    newString.Add(new Symbol("[", new object[] { }));
+                    newString.Add(new Symbol("]", new object[] { }));
+                    newString.Add(new Symbol("}", new object[] { })); // end submesh
+                    break;
+
+                case "Blade":
+                    // middle branch
+                    newString.Add(new Symbol("{", new object[] { })); // start submesh
+                    newString.Add(new Symbol("push", new object[] { 0 }));
+                    newString.Add(new Symbol("P", new object[] { 0, "" }));
+                    newString.Add(new Symbol("pop", new object[] { 0 }));
+                    newString.Add(new Symbol("}", new object[] { })); // end submesh
+                    // left branch
+                    newString.Add(new Symbol("{", new object[] { })); // start submesh
+                    newString.Add(new Symbol("push", new object[] { 0 }));
+                    newString.Add(new Symbol("ru", new object[] { -90.0f }));
+                    newString.Add(new Symbol("P", new object[] { 0, "L" }));
+                    newString.Add(new Symbol("pop", new object[] { 0 }));
+                    newString.Add(new Symbol("}", new object[] { })); // end submesh
+                    // right branch
+                    newString.Add(new Symbol("{", new object[] { })); // start submesh
+                    newString.Add(new Symbol("push", new object[] { 0 }));
+                    newString.Add(new Symbol("ru", new object[] { 90.0f }));
+                    newString.Add(new Symbol("P", new object[] { 0, "R" }));
+                    newString.Add(new Symbol("pop", new object[] { 0 }));
+                    newString.Add(new Symbol("}", new object[] { })); // end submesh
+                    break;
+
+                case "Circle": // input: radius, uv.y
+                    newString.Add(new Symbol("[", new object[] { }));
+                    for (int i = 0; i < circleSubdivision; i++)
+                    {
+                        newString.Add(new Symbol("V", new object[] { 1, 360.0f * i / circleSubdivision, item.p[0], 0 }));
+                    }
+                    newString.Add(new Symbol("]", new object[] { }));
+                    break;
+
+                case "P": // point
+                    int t = (int)item.p[0];
+                    float sectionWidth = (bladeWidth + t * bladeWidthFactorA) * (maxIter - t * bladeWidthFactorB) / maxIter;
+                    float sectionThick = bladeThick * (maxIter - t * bladeWidthFactorB) / maxIter;
+
+                    newString.Add(new Symbol("[", new object[] { }));
+                    newString.Add(new Symbol("V", new object[] { 1, 0.0f, sectionWidth, 2 }));
+                    newString.Add(new Symbol("V", new object[] { 1, 90.0f, sectionThick, 2 }));
+                    newString.Add(new Symbol("V", new object[] { 1, 180.0f, sectionWidth, 2 }));
+                    newString.Add(new Symbol("V", new object[] { 1, 270.0f, sectionThick, 2 }));
+                    newString.Add(new Symbol("]", new object[] { }));
+
+                    if ((string)item.p[1] != "" && (t == maxIter / 3 || t == maxIter / 3 * 2))
+                    {
+                        newString.Add(new Symbol("push", new object[] { 0 }));
+                        newString.Add(new Symbol("ru", new object[] { 90.0f }));
+                        newString.Add(new Symbol("P", new object[] { t + 1, "" }));
+                        newString.Add(new Symbol("pop", new object[] { 0 }));
+                        newString.Add(new Symbol("push", new object[] { 0 }));
+                        newString.Add(new Symbol("ru", new object[] { -90.0f }));
+                        newString.Add(new Symbol("P", new object[] { t + 1, "" }));
+                        newString.Add(new Symbol("pop", new object[] { 0 }));
+                    }
+
+                    switch ((string)item.p[1])
+                    {
+                        case "L":
+                            newString.Add(new Symbol("ru", new object[] { bladeCurv }));
+                            break;
+                        case "R":
+                            newString.Add(new Symbol("ru", new object[] { -bladeCurv }));
+                            break;
+                        default:
+                            break;
+                    }
+                    if (t < maxIter)
+                        newString.Add(new Symbol("F", new object[] { bladeLengthGrow / Mathf.Pow(t + 1, bladeLengthGrowFactor) }));
+
+                    item.p[0] = t + 1; // P(t) -> P(t+1)
+                    newString.Add(item);
+                    break;
+                case "V": // vertex
+                    item.p[0] = (int)item.p[0] + 1; // V(t,...) -> V(t+1,...)
+                    newString.Add(item);
                     break;
 
                 default:
