@@ -20,6 +20,8 @@ public class KnifeParametric : MonoBehaviour
     [Range(0.0f, 1.0f)]
     public float bladeWidthFactorB = 0.0f;
     public float bladeThick = 0.2f;
+    public float bladeWaveFreq = 0.0f;
+    public float bladeWaveAmp = 0.0f;
     [Range(-5.0f, 5.0f)]
     public float bladeCurv = 0.0f;
     [Range(0.0f, 1.0f)]
@@ -487,6 +489,10 @@ public class KnifeParametric : MonoBehaviour
                     float sectionWidth = (bladeWidth + t * bladeWidthFactorA) * (maxIter - t * bladeWidthFactorB) / maxIter;
                     float sectionThick = bladeThick * (maxIter - t * bladeWidthFactorB) / maxIter;
 
+                    newString.Add(new Symbol("push", new object[] { 0 }));
+                    if ((string)item.p[1] != "")
+                        newString.Add(new Symbol("R", new object[] { bladeWaveAmp * Mathf.Sin(t / (float)maxIter * bladeWaveFreq) }));
+
                     newString.Add(new Symbol("[", new object[] { }));
                     newString.Add(new Symbol("V", new object[] { 1, 0.0f, sectionWidth, 2 }));
                     newString.Add(new Symbol("V", new object[] { 1, 90.0f, sectionThick, 2 }));
@@ -494,17 +500,19 @@ public class KnifeParametric : MonoBehaviour
                     newString.Add(new Symbol("V", new object[] { 1, 270.0f, sectionThick, 2 }));
                     newString.Add(new Symbol("]", new object[] { }));
 
-                    if ((string)item.p[1] != "" && (t == maxIter / 3 || t == maxIter / 3 * 2))
-                    {
-                        newString.Add(new Symbol("push", new object[] { 0 }));
-                        newString.Add(new Symbol("ru", new object[] { 90.0f }));
-                        newString.Add(new Symbol("P", new object[] { t + 1, "" }));
-                        newString.Add(new Symbol("pop", new object[] { 0 }));
-                        newString.Add(new Symbol("push", new object[] { 0 }));
-                        newString.Add(new Symbol("ru", new object[] { -90.0f }));
-                        newString.Add(new Symbol("P", new object[] { t + 1, "" }));
-                        newString.Add(new Symbol("pop", new object[] { 0 }));
-                    }
+                    //if ((string)item.p[1] != "" && (t == maxIter / 3 || t == maxIter / 3 * 2))
+                    //{
+                    //    newString.Add(new Symbol("push", new object[] { 0 }));
+                    //    newString.Add(new Symbol("ru", new object[] { 90.0f }));
+                    //    newString.Add(new Symbol("P", new object[] { t + 1, "" }));
+                    //    newString.Add(new Symbol("pop", new object[] { 0 }));
+                    //    newString.Add(new Symbol("push", new object[] { 0 }));
+                    //    newString.Add(new Symbol("ru", new object[] { -90.0f }));
+                    //    newString.Add(new Symbol("P", new object[] { t + 1, "" }));
+                    //    newString.Add(new Symbol("pop", new object[] { 0 }));
+                    //}
+
+                    newString.Add(new Symbol("pop", new object[] { 0 }));
 
                     switch ((string)item.p[1])
                     {

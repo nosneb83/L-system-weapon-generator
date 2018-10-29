@@ -18,7 +18,7 @@ public class ManagerSingleton : MonoBehaviour
         }
     }
     
-    GameObject weapon;
+    public GameObject weapon;
     Sword1 sword1;
     Spear1 spear1;
     Jian jian;
@@ -29,6 +29,11 @@ public class ManagerSingleton : MonoBehaviour
     public int iter;
     int t;
     bool run;
+
+    public GameObject testObj;
+    Axe testAxe;
+    Cylinder testCylinder;
+    Parameters p;
 
     // Use this for initialization
     void Start()
@@ -55,6 +60,12 @@ public class ManagerSingleton : MonoBehaviour
         knifeParametric = weapon.AddComponent<KnifeParametric>();
         turtle = weapon.AddComponent<TurtleInterpretation>();
 
+        testObj = new GameObject("Test");
+        testObj.layer = 8;
+        testAxe = testObj.AddComponent<Axe>();
+        testCylinder = testObj.AddComponent<Cylinder>();
+        p = testObj.AddComponent<Parameters>();
+
         theString = new List<Symbol>();
 
         iter = 50;
@@ -65,28 +76,21 @@ public class ManagerSingleton : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        onIteration();
-    }
+        //onIteration();
 
-    //private void FixedUpdate()
-    //{
-    //    if (run)
-    //    {
-    //        onIteration();
-    //        if (t == iter)
-    //        {
-    //            run = false;
-    //        }
-    //        else
-    //        {
-    //            t++;
-    //        }
-    //    }
-    //    else
-    //    {
-    //        t = 0;
-    //    }
-    //}
+        testObj.transform.position = new Vector3(testObj.transform.position.x, 1.0f + 0.05f * Mathf.Sin(Time.time * 1.5f), testObj.transform.position.z);
+
+        //testAxe.CreateAxe(new Turtle(Vector3.zero, Vector3.right, -Vector3.forward, -Vector3.up)
+        //    , p.crescentL
+        //    , p.crescentW
+        //    , p.crescentT
+        //    , p.bladeCurv
+        //    , p.circleSubdivision);
+        testCylinder.CreateCylinder(new Turtle(Vector3.zero, Vector3.right, -Vector3.forward, -Vector3.up)
+            , p.crescentL
+            , p.crescentW
+            , p.circleSubdivision);
+    }
 
     public void onIteration()
     {

@@ -13,11 +13,13 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile></CompilerResponseFile>
+    <CompilerResponseFile>
+    </CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows64:19</UnityBuildTarget>
     <UnityVersion>2017.4.10f1</UnityVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <LangVersion>4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -231,6 +233,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Camera\FloatingCamera.cs" />
+    <Compile Include="Assets\Scripts\Camera\maxCamera.cs" />
+    <Compile Include="Assets\Scripts\Components\BasicMesh.cs" />
+    <Compile Include="Assets\Scripts\Components\Blade\Axe.cs" />
+    <Compile Include="Assets\Scripts\Components\Blade\Crescent.cs" />
+    <Compile Include="Assets\Scripts\Components\Blade\Fork.cs" />
+    <Compile Include="Assets\Scripts\Components\Blade\Knife.cs" />
+    <Compile Include="Assets\Scripts\Components\Blade\Sword.cs" />
+    <Compile Include="Assets\Scripts\Components\Grip\Cylinder.cs" />
+    <Compile Include="Assets\Scripts\Components\Guard\Diamond.cs" />
+    <Compile Include="Assets\Scripts\Components\Parameters.cs" />
+    <Compile Include="Assets\Scripts\Components\Pommel\Ring.cs" />
     <Compile Include="Assets\Scripts\DataStructures.cs" />
     <Compile Include="Assets\Scripts\Jian.cs" />
     <Compile Include="Assets\Scripts\Knife1.cs" />
@@ -242,6 +256,12 @@
     <Compile Include="Assets\Scripts\Spear1.cs" />
     <Compile Include="Assets\Scripts\Sword1.cs" />
     <Compile Include="Assets\Scripts\TurtleInterpretation.cs" />
+    <Compile Include="Assets\Scripts\UI\ChooseWeapon.cs" />
+    <Compile Include="Assets\Simple UI\Samples\IconPreview.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\3DForge\Fantasy_Interiors\Villages_&amp;_Towns\Documents\Village_Interiors_User_Guid_v1.3.txt" />
+    <None Include="Assets\Simple UI\Fonts\OFL.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

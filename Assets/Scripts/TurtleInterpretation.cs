@@ -95,6 +95,9 @@ public class TurtleInterpretation : MonoBehaviour
                 case "F": // go forward
                     turtle.p += turtle.f * (float)sy.p[0];
                     break;
+                case "R": // go right-sideward
+                    turtle.p += turtle.r * (float)sy.p[0];
+                    break;
                 case "rf": // rotation around forward vector
                     //turtle.u = Quaternion.AngleAxis((float)sy.p[0], turtle.f) * turtle.u;
                     //turtle.r = Quaternion.AngleAxis((float)sy.p[0], turtle.f) * turtle.r;
