@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
+using UnityEngine.Events;
 
 public class BasicMesh : MonoBehaviour
 {
@@ -23,6 +25,10 @@ public class BasicMesh : MonoBehaviour
 
         renderer = gameObject.GetComponent<MeshRenderer>();
         if (renderer == null) renderer = gameObject.AddComponent<MeshRenderer>();
+        //renderer.materials = new Material[] {
+        //    Resources.Load<Material>("Materials/Knife/Grip"),
+        //    Resources.Load<Material>("Materials/Knife/Blade")
+        //};
 
         vertices = new List<Vector3>();
         normals = new List<Vector3>();
@@ -34,6 +40,11 @@ public class BasicMesh : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public virtual void CreateMesh(Turtle turtle, Parameters p)
+    {
+
     }
 
     protected void SetMesh(List<List<List<Vertex>>> submeshes, List<Vector3> startPoints, List<Vector3> endPoints)

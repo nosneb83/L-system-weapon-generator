@@ -1,21 +1,19 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Events;
 
 public class Axe : BasicMesh
 {
-    private Turtle turtle;
-
-    // parameters
-    public float L;
-    public float W;
-    public float D;
-    public float bladeCurv;
-    public float circleSubdivision;
-
     // l : length, w : width, t : thick, c : curve angle, s : subdivision
-    public void CreateAxe(Turtle turtle, float l, float w, float t, float c, int s)
+    public override void CreateMesh(Turtle turtle, Parameters p)
     {
+        float l = p.crescentL;
+        float w = p.crescentW;
+        float t = p.crescentT;
+        float c = p.bladeCurv;
+        int s = p.circleSubdivision;
+
         renderer.materials = new Material[] {
             Resources.Load<Material>("Materials/Knife/Blade")
         };
