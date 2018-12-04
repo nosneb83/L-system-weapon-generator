@@ -1,8 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
-using UnityEditor;
 using UnityEngine.UI;
-using UnityEngine.Events;
 
 public class ChooseWeapon : MonoBehaviour
 {
@@ -10,11 +7,11 @@ public class ChooseWeapon : MonoBehaviour
 
     void Start()
     {
-        btn_knife.onClick.AddListener(() => OnChooseKnife());
-        btn_spear.onClick.AddListener(() => OnChooseSpear());
-        btn_sword.onClick.AddListener(() => OnChooseSword());
-        btn_halberd.onClick.AddListener(() => OnChooseHalberd());
-        btn_axe.onClick.AddListener(() => OnChooseAxe());
+        //btn_knife.onClick.AddListener(() => OnChooseKnife());
+        //btn_spear.onClick.AddListener(() => OnChooseSpear());
+        //btn_sword.onClick.AddListener(() => OnChooseSword());
+        //btn_halberd.onClick.AddListener(() => OnChooseHalberd());
+        //btn_axe.onClick.AddListener(() => OnChooseAxe());
     }
 
     void OnChooseKnife()

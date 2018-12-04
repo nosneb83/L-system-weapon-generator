@@ -32,6 +32,8 @@ public class ManagerSingleton : MonoBehaviour
         }
     }
 
+    UIManager myUI;
+
     //public GameObject weapon;
     //Sword1 sword1;
     //Spear1 spear1;
@@ -45,7 +47,7 @@ public class ManagerSingleton : MonoBehaviour
     //bool run;
 
     public GameObject testObj, pommel, grip, guard, blade;
-    public Axe testAxe;
+    public BasicMesh testAxe;
     public Cylinder testCylinder;
     public Parameters p;
 
@@ -56,6 +58,7 @@ public class ManagerSingleton : MonoBehaviour
     void Start()
     {
         if (Instance != this) Destroy(this);
+        myUI = UIManager.Instance;
 
         /*** 2. ***/
         //target = Target.Fork;
@@ -90,7 +93,7 @@ public class ManagerSingleton : MonoBehaviour
         blade = new GameObject("Blade");
         blade.transform.parent = testObj.transform;
         blade.layer = 8;
-        testAxe = blade.AddComponent<Axe>();
+        //testAxe = blade.AddComponent<Axe>();
 
         //theString = new List<Symbol>();
 
@@ -107,8 +110,33 @@ public class ManagerSingleton : MonoBehaviour
         StartCoroutine(AfterStart());
     }
 
-    IEnumerator AfterStart()
+    public IEnumerator AfterStart()
     {
+        yield return new WaitForEndOfFrame();
+
+        // remove old one
+        BasicMesh oldMesh = blade.GetComponent<BasicMesh>();
+        if (oldMesh != null) Destroy(oldMesh);
+
+        switch (myUI.currentType)
+        {
+            case UIManager.WeaponTypes.刀:
+                testAxe = blade.AddComponent<Knife>();
+                break;
+            case UIManager.WeaponTypes.槍:
+                break;
+            case UIManager.WeaponTypes.劍:
+                break;
+            case UIManager.WeaponTypes.戟:
+                testAxe = blade.AddComponent<Crescent>();
+                break;
+            case UIManager.WeaponTypes.斧:
+                testAxe = blade.AddComponent<Axe>();
+                break;
+            default:
+                break;
+        }
+
         yield return new WaitForEndOfFrame();
         MakeWeapon();
     }
@@ -120,29 +148,56 @@ public class ManagerSingleton : MonoBehaviour
         testObj.transform.position = new Vector3(testObj.transform.position.x, 0.75f + 0.05f * Mathf.Sin(Time.time * 1.5f), testObj.transform.position.z);
     }
 
-    private void MakeWeapon()
+    public void MakeWeapon()
     {
+        testAxe.linePoints.Clear();
+
         // parameters
-        p.gripLength = sli_p[0].value;
-        p.gripWidth = sli_p[1].value;
-        p.crescentL = sli_p[2].value;
-        p.crescentW = sli_p[3].value;
-        p.crescentT = sli_p[4].value;
-        p.bladeCurv = sli_p[5].value;
+        //myUI.parameters["gripLength"][0] = sli_p[0].value;
+        //myUI.parameters["gripWidth"][0] = sli_p[1].value;
+        //myUI.parameters["crescentL"][0] = sli_p[2].value;
+        //myUI.parameters["crescentW"][0] = sli_p[3].value;
+        //myUI.parameters["crescentT"][0] = sli_p[4].value;
+        //myUI.parameters["bladeCurv"][0] = sli_p[5].value;
 
-        // create mesh
+        /*** create mesh ***/
+
+        // start turtle
         Turtle turtle = new Turtle(Vector3.zero, Vector3.up, -Vector3.forward, Vector3.right);
-        testCylinder.CreateCylinder(new Turtle(turtle)
-            , p.gripLength
-            , p.gripWidth
-            , p.circleSubdivision);
-        turtle.Go(turtle.f, p.gripLength);
-        turtle.RotateAroundUp(90);
-        //turtle.Go(turtle.r, 0.2f);
-        turtle.Go(-turtle.f, p.gripWidth);
 
-        BasicMesh bladeMesh = blade.GetComponent<BasicMesh>();
-        bladeMesh.CreateMesh(new Turtle(turtle), p);
+        // grip
+        CreateComponentMesh(grip, new Turtle(turtle));
+
+        // blade
+        switch (myUI.currentType)
+        {
+            case UIManager.WeaponTypes.刀:
+                turtle.Go(turtle.f, p.gripLength);
+                break;
+            case UIManager.WeaponTypes.槍:
+                break;
+            case UIManager.WeaponTypes.劍:
+                break;
+            case UIManager.WeaponTypes.戟:
+                turtle.Go(turtle.f, p.gripLength);
+                //turtle.RotateAroundUp(90);
+                turtle.Go(-turtle.f, p.gripWidth);
+                break;
+            case UIManager.WeaponTypes.斧:
+                turtle.Go(turtle.f, p.gripLength);
+                turtle.RotateAroundUp(90);
+                turtle.Go(-turtle.f, p.gripWidth);
+                break;
+            default:
+                break;
+        }
+        CreateComponentMesh(blade, new Turtle(turtle));
+    }
+
+    private void CreateComponentMesh(GameObject component, Turtle turtle)
+    {
+        BasicMesh bm = component.GetComponent<BasicMesh>();
+        bm.CreateMesh(new Turtle(turtle), p);
     }
 
     //public void onIteration()

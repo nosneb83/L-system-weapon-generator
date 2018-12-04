@@ -1,18 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class Axe : BasicMesh
 {
     // l : length, w : width, t : thick, c : curve angle, s : subdivision
     public override void CreateMesh(Turtle turtle, Parameters p)
     {
-        float l = p.crescentL;
-        float w = p.crescentW;
-        float t = p.crescentT;
-        float c = p.bladeCurv;
-        int s = p.circleSubdivision;
+        float l = (myUI.parameters["crescentL"] as Slider).value;
+        float w = (myUI.parameters["crescentW"] as Slider).value;
+        float t = (myUI.parameters["crescentT"] as Slider).value;
+        float c = (myUI.parameters["bladeCurv"] as Slider).value;
+        int s = (int)(myUI.parameters["circleSubdivision"] as Slider).value;
 
         renderer.materials = new Material[] {
             Resources.Load<Material>("Materials/Knife/Blade")
@@ -27,16 +27,20 @@ public class Axe : BasicMesh
         startPoints.Add(turtle.p);
         endPoints.Add(turtle.p + turtle.f * l);
 
-        List<List<Vector3>> curves = new List<List<Vector3>>();
+        // get turtles as the start points of each curve
         List<Turtle> axeTurtles = new List<Turtle>();
         for (int i = 0; i <= s; i++)
         {
             Turtle newTurtle = new Turtle(turtle);
-            newTurtle.Go(-newTurtle.r, w / 2.0f);
-            newTurtle.Go(newTurtle.r, w * i / s);
+            //newTurtle.Go(-newTurtle.r, w / 2.0f);
+            //newTurtle.Go(newTurtle.r, w * i / s);
+            newTurtle = MoveTurtle(newTurtle, -newTurtle.r, w / 2.0f);
+            newTurtle = MoveTurtle(newTurtle, newTurtle.r, w * i / s);
             axeTurtles.Add(newTurtle);
         }
 
+        // get the curves for each turtle
+        List<List<Vector3>> curves = new List<List<Vector3>>();
         for (int i = 0; i <= s; i++)
         {
             curves.Add(GetCurvePoints(new Turtle(axeTurtles[i]), l, t, -c + (2 * c) * i / s, s));

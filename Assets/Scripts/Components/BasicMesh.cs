@@ -15,6 +15,12 @@ public class BasicMesh : MonoBehaviour
     protected List<List<int>> triangles;
     protected List<int> triangleSubmesh;
 
+    protected UIManager myUI;
+
+    // for line
+    protected Material lineMat;
+    public List<List<Vector3>> linePoints;
+
     // Use this for initialization
     void Start()
     {
@@ -34,12 +40,20 @@ public class BasicMesh : MonoBehaviour
         normals = new List<Vector3>();
         uvs = new List<Vector2>();
         triangles = new List<List<int>>();
+
+        myUI = UIManager.Instance;
+
+        lineMat = new Material(Shader.Find("Sprites/Default"));
+        linePoints = new List<List<Vector3>>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        foreach (var item in linePoints)
+        {
+            Debug.DrawLine(item[0] + transform.position, item[1] + transform.position);
+        }
     }
 
     public virtual void CreateMesh(Turtle turtle, Parameters p)
@@ -70,7 +84,8 @@ public class BasicMesh : MonoBehaviour
                         v0 = submeshes[i][j][(k + 1) % ringVerNum];
                         v1 = submeshes[i][j][k];
                         v2.pos = startPoints[i];
-                        DrawTriangle(v0.pos, v1.pos, v2.pos);
+                        //if (!(bool)myUI.parameters["showLineIsOn"][0])
+                            DrawTriangle(v0.pos, v1.pos, v2.pos);
                     }
                 }
                 if (j < submeshes[i].Count - 1) // between rings
@@ -82,7 +97,8 @@ public class BasicMesh : MonoBehaviour
                         v2 = submeshes[i][j + 1][k];
                         v3 = submeshes[i][j + 1][(k + 1) % ringVerNum];
                         //DrawQuadrangleInterpolated(v0.pos, v1.pos, v2.pos, v3.pos, v0.tex, v1.tex, v2.tex, v3.tex);
-                        DrawQuadrangleUV(v0, v1, v2, v3);
+                        //if (!(bool)myUI.parameters["showLineIsOn"][0])
+                            DrawQuadrangleUV(v0, v1, v2, v3);
                     }
                 }
                 else // end point
@@ -92,7 +108,8 @@ public class BasicMesh : MonoBehaviour
                         v0 = submeshes[i][j][k];
                         v1 = submeshes[i][j][(k + 1) % ringVerNum];
                         v2.pos = endPoints[i];
-                        DrawTriangle(v0.pos, v1.pos, v2.pos);
+                        //if (!(bool)myUI.parameters["showLineIsOn"][0])
+                            DrawTriangle(v0.pos, v1.pos, v2.pos);
                     }
                 }
             }
@@ -105,7 +122,8 @@ public class BasicMesh : MonoBehaviour
         mesh.subMeshCount = triangles.Count;
         for (int i = 0; i < triangles.Count; i++)
         {
-            mesh.SetTriangles(triangles[i], i);
+            //if (!(bool)myUI.parameters["showLineIsOn"][0])
+                mesh.SetTriangles(triangles[i], i);
         }
 
         mesh.RecalculateNormals();
@@ -293,10 +311,85 @@ public class BasicMesh : MonoBehaviour
         for (int i = 0; i <= s; i++)
         {
             curvePoints.Add(turtle.p + turtle.u * t / 2 * (s - i) / s);
-            turtle.Go(turtle.f, l / s);
+            //if ((bool)myUI.parameters["showLineIsOn"][0])
+                linePoints.Add(new List<Vector3>() { turtle.p, turtle.p + turtle.u * t / 2 * (s - i) / s });
+            //turtle.Go(turtle.f, l / s);
+            turtle = MoveTurtle(turtle, turtle.f, l / s);
             turtle.RotateAroundUp(c);
         }
 
         return curvePoints;
+    }
+
+    protected Turtle MoveTurtle(Turtle turtle, Vector3 dir, float dis)
+    {
+        Vector3 lineStart, lineEnd;
+        lineStart = turtle.p;
+        turtle.Go(dir, dis);
+        lineEnd = turtle.p;
+
+        // draw (GL)
+        //if ((bool)myUI.parameters["showLineIsOn"][0])
+        //{
+        //    GL.PushMatrix();
+
+        //    lineMat.SetPass(0);
+        //    GL.LoadIdentity();
+        //    //GL.MultMatrix(Camera.main.worldToCameraMatrix);
+
+        //    GL.Begin(GL.LINES);
+        //    GL.Color(Color.red);
+        //    GL.Vertex(Vector3.zero);
+        //    GL.Vertex(Vector3.one);
+        //    GL.End();
+
+        //    GL.PopMatrix();
+
+        //    //Debug.Log("start = " + lineStart.ToString("G4"));
+        //    //Debug.Log("end   = " + lineEnd.ToString("G4"));
+        //}
+
+        // draw (line renderer)
+        //LineRenderer newLine = new GameObject().AddComponent<LineRenderer>();
+        //newLine.material = lineMat;
+
+        // draw line (Debug)
+        //if ((bool)myUI.parameters["showLineIsOn"][0])
+            linePoints.Add(new List<Vector3>() { lineStart, lineEnd });
+
+        return turtle;
+    }
+
+    void OnPostRender()
+    {
+        GL.PushMatrix();
+
+        lineMat.SetPass(0);
+        GL.LoadIdentity();
+        //GL.MultMatrix(Camera.main.worldToCameraMatrix);
+
+        GL.Begin(GL.LINES);
+        GL.Color(Color.red);
+        GL.Vertex(Vector3.zero);
+        GL.Vertex(Vector3.one);
+        GL.End();
+
+        GL.PopMatrix();
+    }
+
+    protected Vertex CreateVertex(Vector3 pos)
+    {
+        Vertex newVertex = new Vertex();
+        newVertex.pos = pos;
+        newVertex.uv = new Vector2(newVertex.pos.x / 10.0f, newVertex.pos.z / 10.0f);
+        return newVertex;
+    }
+
+    protected Vertex CreateVertex(Vector3 pos, Vector2 uv)
+    {
+        Vertex newVertex = new Vertex();
+        newVertex.pos = pos;
+        newVertex.uv = uv;
+        return newVertex;
     }
 }

@@ -1,14 +1,19 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class Cylinder : BasicMesh
 {
     private Turtle turtle;
 
     // l : length, r : radius, s : subdivision
-    public void CreateCylinder(Turtle turtle, float l, float r, int s)
+    public override void CreateMesh(Turtle turtle, Parameters p)
     {
+        float l = (myUI.parameters["gripLength"] as Slider).value;
+        float r = (myUI.parameters["gripWidth"] as Slider).value;
+        int s = (int)(myUI.parameters["circleSubdivision"] as Slider).value;
+
         renderer.materials = new Material[] {
             Resources.Load<Material>("Materials/Knife/Grip")
         };
