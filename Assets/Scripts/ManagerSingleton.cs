@@ -46,13 +46,14 @@ public class ManagerSingleton : MonoBehaviour
     //int t;
     //bool run;
 
-    public GameObject testObj, pommel, grip, guard, blade;
+    public GameObject testObj, pommel, grip, guard, blade, blade1;
     public BasicMesh testAxe;
-    public Cylinder testCylinder;
     public Parameters p;
 
     public GameObject panel_p;
     private List<Slider> sli_p;
+
+    public bool meshReady = false;
 
     // Use this for initialization
     void Start()
@@ -88,11 +89,22 @@ public class ManagerSingleton : MonoBehaviour
         grip = new GameObject("Grip");
         grip.transform.parent = testObj.transform;
         grip.layer = 8;
-        testCylinder = grip.AddComponent<Cylinder>();
+        grip.AddComponent<Cylinder>();
+
+        guard = new GameObject("Guard");
+        guard.transform.parent = testObj.transform;
+        guard.layer = 8;
+        guard.AddComponent<CylinderGuard>();
 
         blade = new GameObject("Blade");
         blade.transform.parent = testObj.transform;
         blade.layer = 8;
+
+        blade1 = new GameObject("Blade1");
+        blade1.transform.parent = blade.transform;
+        blade1.layer = 8;
+        blade1.AddComponent<Crescent>();
+
         //testAxe = blade.AddComponent<Axe>();
 
         //theString = new List<Symbol>();
@@ -117,28 +129,38 @@ public class ManagerSingleton : MonoBehaviour
         // remove old one
         BasicMesh oldMesh = blade.GetComponent<BasicMesh>();
         if (oldMesh != null) Destroy(oldMesh);
+        blade1.SetActive(false);
 
+        // make new one
         switch (myUI.currentType)
         {
             case UIManager.WeaponTypes.刀:
                 testAxe = blade.AddComponent<Knife>();
                 break;
             case UIManager.WeaponTypes.槍:
+                testAxe = blade.AddComponent<Sword>();
                 break;
             case UIManager.WeaponTypes.劍:
+                testAxe = blade.AddComponent<Sword>();
                 break;
             case UIManager.WeaponTypes.戟:
-                testAxe = blade.AddComponent<Crescent>();
+                testAxe = blade.AddComponent<Sword>();
+                blade1.SetActive(true);
                 break;
             case UIManager.WeaponTypes.斧:
                 testAxe = blade.AddComponent<Axe>();
                 break;
+            case UIManager.WeaponTypes.三尖刀:
+                testAxe = blade.AddComponent<TridentSword>();
+                break;
             default:
                 break;
         }
+        meshReady = true;
 
         yield return new WaitForEndOfFrame();
-        MakeWeapon();
+
+        if (meshReady) MakeWeapon();
     }
 
     // Update is called once per frame
@@ -166,38 +188,73 @@ public class ManagerSingleton : MonoBehaviour
         Turtle turtle = new Turtle(Vector3.zero, Vector3.up, -Vector3.forward, Vector3.right);
 
         // grip
-        CreateComponentMesh(grip, new Turtle(turtle));
-
-        // blade
         switch (myUI.currentType)
         {
             case UIManager.WeaponTypes.刀:
-                turtle.Go(turtle.f, p.gripLength);
-                break;
-            case UIManager.WeaponTypes.槍:
-                break;
             case UIManager.WeaponTypes.劍:
+            case UIManager.WeaponTypes.槍:
+            case UIManager.WeaponTypes.斧:
+            case UIManager.WeaponTypes.三尖刀:
+                CreateComponentMesh(grip, new Turtle(turtle));
+                turtle.Go(turtle.f, (myUI.parameters["gripLength"] as Slider).value);
                 break;
             case UIManager.WeaponTypes.戟:
-                turtle.Go(turtle.f, p.gripLength);
-                //turtle.RotateAroundUp(90);
-                turtle.Go(-turtle.f, p.gripWidth);
-                break;
-            case UIManager.WeaponTypes.斧:
-                turtle.Go(turtle.f, p.gripLength);
-                turtle.RotateAroundUp(90);
-                turtle.Go(-turtle.f, p.gripWidth);
+                CreateComponentMesh(grip, new Turtle(turtle));
+                turtle.Go(turtle.f, (myUI.parameters["gripLength"] as Slider).value * 0.7f);
                 break;
             default:
                 break;
         }
-        CreateComponentMesh(blade, new Turtle(turtle));
+
+        // guard
+        switch (myUI.currentType)
+        {
+            case UIManager.WeaponTypes.刀:
+            case UIManager.WeaponTypes.劍:
+            case UIManager.WeaponTypes.三尖刀:
+                CreateComponentMesh(guard, new Turtle(turtle));
+                turtle.Go(turtle.f, (myUI.parameters["guardLength"] as Slider).value);
+                break;
+            default:
+                break;
+        }
+
+        // blade
+        switch (myUI.currentType)
+        {
+            case UIManager.WeaponTypes.槍:
+            case UIManager.WeaponTypes.劍:
+            case UIManager.WeaponTypes.三尖刀:
+                CreateComponentMesh(blade, new Turtle(turtle));
+                break;
+            case UIManager.WeaponTypes.刀:
+                turtle.Go(turtle.r, (myUI.parameters["bladeWidth"] as Slider).value * 0.4f);
+                CreateComponentMesh(blade, new Turtle(turtle));
+                break;
+            case UIManager.WeaponTypes.戟:
+                // left crescent
+                Turtle leftCrescentTurtle = new Turtle(turtle);
+                leftCrescentTurtle.RotateAroundUp(90);
+                leftCrescentTurtle.Go(turtle.r, (myUI.parameters["gripWidth"] as Slider).value);
+                CreateComponentMesh(blade1, leftCrescentTurtle);
+
+                turtle.Go(turtle.f, (myUI.parameters["gripLength"] as Slider).value * 0.3f);
+                CreateComponentMesh(blade, new Turtle(turtle));
+                break;
+            case UIManager.WeaponTypes.斧:
+                turtle.RotateAroundUp(90);
+                turtle.Go(-turtle.f, (myUI.parameters["gripWidth"] as Slider).value);
+                CreateComponentMesh(blade, new Turtle(turtle));
+                break;
+            default:
+                break;
+        }
     }
 
     private void CreateComponentMesh(GameObject component, Turtle turtle)
     {
         BasicMesh bm = component.GetComponent<BasicMesh>();
-        bm.CreateMesh(new Turtle(turtle), p);
+        bm.CreateMesh(new Turtle(turtle));
     }
 
     //public void onIteration()

@@ -5,8 +5,7 @@ using UnityEngine.UI;
 
 public class Knife : BasicMesh
 {
-    // l : length, w : width, t : thick, c : curve angle, s : subdivision
-    public override void CreateMesh(Turtle turtle, Parameters p)
+    public override void CreateMesh(Turtle turtle)
     {
         float bladeLengthGrow = (myUI.parameters["bladeLengthGrow"] as Slider).value;
         float bladeLengthGrowFactor = (myUI.parameters["bladeLengthGrowFactor"] as Slider).value;
@@ -53,21 +52,26 @@ public class Knife : BasicMesh
 
         Turtle branchTurtle = new Turtle(turtle);
         branchTurtle = MoveTurtle(branchTurtle, branchTurtle.u, sectionThick);
-        ring.Add(CreateVertex(branchTurtle.p));
+        temp.Push(CreateVertex(branchTurtle.p));
         branchTurtle = new Turtle(turtle);
         branchTurtle = MoveTurtle(branchTurtle, -branchTurtle.u, sectionThick);
-        temp.Push(CreateVertex(branchTurtle.p));
+        ring.Add(CreateVertex(branchTurtle.p));
 
         turtle = MoveTurtle(turtle, -turtle.r, sectionWidth * (1 - edgeRatio));
         branchTurtle = new Turtle(turtle);
         branchTurtle = MoveTurtle(branchTurtle, branchTurtle.u, sectionThick);
-        ring.Add(CreateVertex(branchTurtle.p));
+        temp.Push(CreateVertex(branchTurtle.p));
         branchTurtle = new Turtle(turtle);
         branchTurtle = MoveTurtle(branchTurtle, -branchTurtle.u, sectionThick);
-        temp.Push(CreateVertex(branchTurtle.p));
+        ring.Add(CreateVertex(branchTurtle.p));
 
         turtle = MoveTurtle(turtle, -turtle.r, sectionWidth * edgeRatio);
         ring.Add(CreateVertex(turtle.p));
+
+        foreach (var item in temp)
+        {
+            ring.Add(item);
+        }
 
         return ring;
     }

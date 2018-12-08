@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class Axe : BasicMesh
 {
     // l : length, w : width, t : thick, c : curve angle, s : subdivision
-    public override void CreateMesh(Turtle turtle, Parameters p)
+    public override void CreateMesh(Turtle turtle)
     {
         float l = (myUI.parameters["crescentL"] as Slider).value;
         float w = (myUI.parameters["crescentW"] as Slider).value;

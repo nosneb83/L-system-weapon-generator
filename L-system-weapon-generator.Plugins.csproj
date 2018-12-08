@@ -5,22 +5,20 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{70906C07-C465-3FC7-7249-4EE9683D82C5}</ProjectGuid>
+    <ProjectGuid>{F1E6EA45-5AFE-A1FA-27C7-AE4D4DE6C404}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <AssemblyName>Assembly-CSharp</AssemblyName>
+    <AssemblyName>Assembly-CSharp-firstpass</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile>
-    </CompilerResponseFile>
+    <CompilerResponseFile></CompilerResponseFile>
     <UnityProjectGenerator>VSTU</UnityProjectGenerator>
-    <UnityProjectType>Game:1</UnityProjectType>
+    <UnityProjectType>GamePlugins:3</UnityProjectType>
     <UnityBuildTarget>WebGL:20</UnityBuildTarget>
     <UnityVersion>2017.4.10f1</UnityVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <LangVersion>4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -234,40 +232,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="L-system-weapon-generator.Plugins.csproj">
-      <Project>{F1E6EA45-5AFE-A1FA-27C7-AE4D4DE6C404}</Project>
-      <Name>L-system-weapon-generator.Plugins</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Assets\Scripts\Camera\FloatingCamera.cs" />
-    <Compile Include="Assets\Scripts\Camera\maxCamera.cs" />
-    <Compile Include="Assets\Scripts\Components\BasicMesh.cs" />
-    <Compile Include="Assets\Scripts\Components\Blade\Axe.cs" />
-    <Compile Include="Assets\Scripts\Components\Blade\Crescent.cs" />
-    <Compile Include="Assets\Scripts\Components\Blade\Fork.cs" />
-    <Compile Include="Assets\Scripts\Components\Blade\Knife.cs" />
-    <Compile Include="Assets\Scripts\Components\Blade\Sword.cs" />
-    <Compile Include="Assets\Scripts\Components\Blade\TridentSword.cs" />
-    <Compile Include="Assets\Scripts\Components\Grip\Cylinder.cs" />
-    <Compile Include="Assets\Scripts\Components\Guard\CylinderGuard.cs" />
-    <Compile Include="Assets\Scripts\Components\Guard\Diamond.cs" />
-    <Compile Include="Assets\Scripts\Components\Parameters.cs" />
-    <Compile Include="Assets\Scripts\Components\Pommel\Ring.cs" />
-    <Compile Include="Assets\Scripts\DataStructures.cs" />
-    <Compile Include="Assets\Scripts\Jian.cs" />
-    <Compile Include="Assets\Scripts\Knife1.cs" />
-    <Compile Include="Assets\Scripts\Knife2.cs" />
-    <Compile Include="Assets\Scripts\Knife3.cs" />
-    <Compile Include="Assets\Scripts\KnifeParametric.cs" />
-    <Compile Include="Assets\Scripts\ManagerSingleton.cs" />
-    <Compile Include="Assets\Scripts\Spear.cs" />
-    <Compile Include="Assets\Scripts\Spear1.cs" />
-    <Compile Include="Assets\Scripts\Sword1.cs" />
-    <Compile Include="Assets\Scripts\TurtleInterpretation.cs" />
-    <Compile Include="Assets\Scripts\UI\ChooseWeapon.cs" />
-    <Compile Include="Assets\Scripts\UI\UIManager.cs" />
-    <Compile Include="Assets\Simple UI\Samples\IconPreview.cs" />
+    <Compile Include="Assets\Plugins\MeshExtrusion.cs" />
+    <Compile Include="Assets\Plugins\Perlin.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\3DForge\Fantasy_Interiors\Villages_&amp;_Towns\Documents\Village_Interiors_User_Guid_v1.3.txt" />

@@ -5,8 +5,7 @@ using UnityEngine.UI;
 
 public class Crescent : BasicMesh
 {
-    // l : length, w : width, t : thick, c : curve angle, s : subdivision
-    public override void CreateMesh(Turtle turtle, Parameters p)
+    public override void CreateMesh(Turtle turtle)
     {
         float l = (myUI.parameters["crescentL"] as Slider).value;
         float w = (myUI.parameters["crescentW"] as Slider).value;
@@ -41,23 +40,23 @@ public class Crescent : BasicMesh
             Vector3 thick = turtle.u * t / 2.0f * Mathf.Sin(i / (float)s * Mathf.PI);
 
             newVertex.pos = outerArc[i] + thick;
-            newVertex.uv = new Vector2(newVertex.pos.x / 10.0f, newVertex.pos.z / 10.0f);
+            newVertex.uv = new Vector2(newVertex.pos.y * uvScale, newVertex.pos.x  * uvScale);
             ring.Add(newVertex);
 
             newVertex.pos = outerArc[i] * edgeRatio + innerArc[i] * (1.0f - edgeRatio) + thick;
-            newVertex.uv = new Vector2(newVertex.pos.x / 10.0f, newVertex.pos.z / 10.0f);
+            newVertex.uv = new Vector2(newVertex.pos.y * uvScale, newVertex.pos.x * uvScale);
             ring.Add(newVertex);
 
             newVertex.pos = innerArc[i];
-            newVertex.uv = new Vector2(newVertex.pos.x / 10.0f, newVertex.pos.z / 10.0f);
+            newVertex.uv = new Vector2(newVertex.pos.y * uvScale, newVertex.pos.x * uvScale);
             ring.Add(newVertex);
 
             newVertex.pos = outerArc[i] * edgeRatio + innerArc[i] * (1.0f - edgeRatio) - thick;
-            newVertex.uv = new Vector2(newVertex.pos.x / 10.0f, newVertex.pos.z / 10.0f);
+            newVertex.uv = new Vector2(newVertex.pos.y * uvScale, newVertex.pos.x * uvScale);
             ring.Add(newVertex);
 
             newVertex.pos = outerArc[i] - thick;
-            newVertex.uv = new Vector2(newVertex.pos.x / 10.0f, newVertex.pos.z / 10.0f);
+            newVertex.uv = new Vector2(newVertex.pos.y * uvScale, newVertex.pos.x * uvScale);
             ring.Add(newVertex);
 
             rings.Add(ring);

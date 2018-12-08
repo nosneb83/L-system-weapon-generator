@@ -21,6 +21,8 @@ public class BasicMesh : MonoBehaviour
     protected Material lineMat;
     public List<List<Vector3>> linePoints;
 
+    public float uvScale = 0.5f;
+
     // Use this for initialization
     void Start()
     {
@@ -50,13 +52,13 @@ public class BasicMesh : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        foreach (var item in linePoints)
-        {
-            Debug.DrawLine(item[0] + transform.position, item[1] + transform.position);
-        }
+        //foreach (var item in linePoints)
+        //{
+        //    Debug.DrawLine(item[0] + transform.position, item[1] + transform.position);
+        //}
     }
 
-    public virtual void CreateMesh(Turtle turtle, Parameters p)
+    public virtual void CreateMesh(Turtle turtle)
     {
 
     }

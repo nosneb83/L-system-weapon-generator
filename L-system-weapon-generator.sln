@@ -1,7 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2017
+# Visual Studio 15
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "L-system-weapon-generator", "L-system-weapon-generator.csproj", "{70906C07-C465-3FC7-7249-4EE9683D82C5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "L-system-weapon-generator.Plugins", "L-system-weapon-generator.Plugins.csproj", "{F1E6EA45-5AFE-A1FA-27C7-AE4D4DE6C404}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,6 +15,10 @@ Global
 		{70906C07-C465-3FC7-7249-4EE9683D82C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{70906C07-C465-3FC7-7249-4EE9683D82C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{70906C07-C465-3FC7-7249-4EE9683D82C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1E6EA45-5AFE-A1FA-27C7-AE4D4DE6C404}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1E6EA45-5AFE-A1FA-27C7-AE4D4DE6C404}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1E6EA45-5AFE-A1FA-27C7-AE4D4DE6C404}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1E6EA45-5AFE-A1FA-27C7-AE4D4DE6C404}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

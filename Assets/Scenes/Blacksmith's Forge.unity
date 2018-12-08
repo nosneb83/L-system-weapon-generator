@@ -20,7 +20,7 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.111940324, g: 0.09455517, b: 0.034250397, a: 1}
+  m_AmbientSkyColor: {r: 0.5, g: 0.42234632, b: 0.15298507, a: 1}
   m_AmbientEquatorColor: {r: 0.111940324, g: 0.09455517, b: 0.034250397, a: 1}
   m_AmbientGroundColor: {r: 0.111940324, g: 0.09455517, b: 0.034250397, a: 1}
   m_AmbientIntensity: 1
@@ -6081,8 +6081,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a5080967036d2a4892fa372e81c7250, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponTypes: []
-  currentType: 
+  currentType: 0
   chooseWeaponPanel: {fileID: 1369477871}
   chooseWeaponBtnPrefab: {fileID: 0}
   chooseWeaponBtns: []
