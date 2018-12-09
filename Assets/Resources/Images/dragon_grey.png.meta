@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 1ab7185db6fc7d345a82981ac005b7d9
+guid: fccd7cb5387c8c64b9a4f8f67c1822b7
 TextureImporter:
   fileIDToRecycleName: {}
   externalObjects: {}
@@ -16,10 +16,10 @@ TextureImporter:
     mipMapFadeDistanceStart: 1
     mipMapFadeDistanceEnd: 3
   bumpmap:
-    convertToNormalMap: 0
+    convertToNormalMap: 1
     externalNormalMap: 0
-    heightScale: 0.25
-    normalMapFilter: 0
+    heightScale: 0.003
+    normalMapFilter: 1
   isReadable: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
