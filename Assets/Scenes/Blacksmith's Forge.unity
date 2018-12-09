@@ -4121,7 +4121,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 2.5
+  near clip plane: 0.3
   far clip plane: 15
   field of view: 45
   orthographic: 0
@@ -5479,10 +5479,11 @@ MonoBehaviour:
   grip: {fileID: 0}
   guard: {fileID: 0}
   blade: {fileID: 0}
+  blade1: {fileID: 0}
   testAxe: {fileID: 0}
-  testCylinder: {fileID: 0}
   p: {fileID: 0}
   panel_p: {fileID: 630765687}
+  meshReady: 0
 --- !u!4 &762679392
 Transform:
   m_ObjectHideFlags: 0

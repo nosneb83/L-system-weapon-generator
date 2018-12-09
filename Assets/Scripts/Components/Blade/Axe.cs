@@ -57,7 +57,7 @@ public class Axe : BasicMesh
             {
                 newVertex = new Vertex();
                 newVertex.pos = curves[j][i];
-                newVertex.uv = new Vector2(newVertex.pos.x / 10.0f, newVertex.pos.z / 10.0f);
+                newVertex.uv = new Vector2(newVertex.pos.x * uvScale * 0.7f, newVertex.pos.y * uvScale * 0.7f);
                 ring.Add(newVertex);
             }
             rings.Add(ring);

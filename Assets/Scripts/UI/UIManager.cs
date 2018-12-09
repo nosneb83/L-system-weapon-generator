@@ -254,10 +254,10 @@ public class UIManager : MonoBehaviour
                 (parameters["gripWidth"] as Slider).value = 0.05f;
                 (parameters["bladeLengthGrow"] as Slider).value = 0.4f;
                 (parameters["bladeLengthGrowFactor"] as Slider).value = 1.0f;
-                (parameters["bladeWidth"] as Slider).value = 0.13f;
+                (parameters["bladeWidth"] as Slider).value = 0.075f;
                 (parameters["bladeWidthFactorA"] as Slider).value = 0.004f;
                 (parameters["bladeWidthFactorB"] as Slider).value = 1.0f;
-                (parameters["bladeThick"] as Slider).value = 0.075f;
+                (parameters["bladeThick"] as Slider).value = 0.03f;
                 (parameters["bladeCurv"] as Slider).value = 0.0f;
                 break;
             case WeaponTypes.戟:
@@ -277,27 +277,27 @@ public class UIManager : MonoBehaviour
                 (parameters["crescentT"] as Slider).value = 0.1f;
                 break;
             case WeaponTypes.斧:
-                (parameters["gripLength"] as Slider).value = 1.2f;
-                (parameters["gripWidth"] as Slider).value = 0.1f;
+                (parameters["gripLength"] as Slider).value = 1.5f;
+                (parameters["gripWidth"] as Slider).value = 0.04f;
                 (parameters["bladeWidth"] as Slider).value = 1.2f;
-                (parameters["bladeCurv"] as Slider).value = 2.5f;
-                (parameters["crescentL"] as Slider).value = 0.75f;
-                (parameters["crescentW"] as Slider).value = 0.3f;
+                (parameters["bladeCurv"] as Slider).value = 3.0f;
+                (parameters["crescentL"] as Slider).value = 0.4f;
+                (parameters["crescentW"] as Slider).value = 0.15f;
                 (parameters["crescentD"] as Slider).value = 0.6f;
                 (parameters["crescentT"] as Slider).value = 0.3f;
                 break;
             case WeaponTypes.三尖刀:
-                (parameters["gripLength"] as Slider).value = 1.2f;
+                (parameters["gripLength"] as Slider).value = 1.25f;
                 (parameters["gripWidth"] as Slider).value = 0.04f;
                 (parameters["guardLength"] as Slider).value = 0.05f;
-                (parameters["guardWidth"] as Slider).value = 0.14f;
-                (parameters["bladeLengthGrow"] as Slider).value = 0.02f;
-                (parameters["bladeLengthGrowFactor"] as Slider).value = 0.06f;
-                (parameters["bladeWidth"] as Slider).value = 0.13f;
-                (parameters["bladeWidthFactorA"] as Slider).value = 0.004f;
+                (parameters["guardWidth"] as Slider).value = 0.11f;
+                (parameters["bladeLengthGrow"] as Slider).value = 0.025f;
+                (parameters["bladeLengthGrowFactor"] as Slider).value = 0.2f;
+                (parameters["bladeWidth"] as Slider).value = 0.1f;
+                (parameters["bladeWidthFactorA"] as Slider).value = 0.0015f;
                 (parameters["bladeWidthFactorB"] as Slider).value = 1.0f;
                 (parameters["bladeThick"] as Slider).value = 0.075f;
-                (parameters["bladeCurv"] as Slider).value = 1.5f;
+                (parameters["bladeCurv"] as Slider).value = 1.25f;
                 break;
             default:
                 break;

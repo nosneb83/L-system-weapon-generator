@@ -15,7 +15,7 @@ public class CylinderGuard : BasicMesh
         int s = (int)(myUI.parameters["circleSubdivision"] as Slider).value;
 
         renderer.materials = new Material[] {
-            Resources.Load<Material>("Materials/Knife/Grip")
+            Resources.Load<Material>("Materials/Knife/Guard")
         };
         List<List<List<Vertex>>> submeshes = new List<List<List<Vertex>>>();
         List<List<Vertex>> rings = new List<List<Vertex>>();
@@ -42,7 +42,7 @@ public class CylinderGuard : BasicMesh
         {
             newVertex = new Vertex();
             newVertex.pos = (Quaternion.AngleAxis(360.0f * i / s, -turtle.f) * turtle.r) * r + turtle.p;
-            newVertex.uv = new Vector2(newVertex.pos.x / 10.0f, newVertex.pos.z / 10.0f);
+            newVertex.uv = new Vector2(newVertex.pos.x * uvScale, newVertex.pos.y * uvScale);
             ring.Add(newVertex);
         }
         rings.Add(ring);

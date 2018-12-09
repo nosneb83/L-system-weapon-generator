@@ -83,7 +83,6 @@ public class ManagerSingleton : MonoBehaviour
 
         testObj = new GameObject("Test");
         testObj.layer = 8;
-        testObj.transform.localEulerAngles = new Vector3(-5, 0, 5);
         p = testObj.AddComponent<Parameters>();
 
         grip = new GameObject("Grip");
@@ -167,7 +166,8 @@ public class ManagerSingleton : MonoBehaviour
     void Update()
     {
         //onIteration();
-        testObj.transform.position = new Vector3(testObj.transform.position.x, 0.75f + 0.05f * Mathf.Sin(Time.time * 1.5f), testObj.transform.position.z);
+        testObj.transform.position = new Vector3(0.3f, 0.65f + 0.05f * Mathf.Sin(Time.time * 1.5f), testObj.transform.position.z);
+        testObj.transform.localEulerAngles = new Vector3(-7.5f, 7.5f, 20f);
     }
 
     public void MakeWeapon()

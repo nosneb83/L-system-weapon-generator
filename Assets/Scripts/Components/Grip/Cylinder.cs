@@ -42,7 +42,7 @@ public class Cylinder : BasicMesh
         {
             newVertex = new Vertex();
             newVertex.pos = (Quaternion.AngleAxis(360.0f * i / s, -turtle.f) * turtle.r) * r + turtle.p;
-            newVertex.uv = new Vector2(newVertex.pos.x / 10.0f, newVertex.pos.z / 10.0f);
+            newVertex.uv = new Vector2((Mathf.PI * r) * i / s * uvScale, newVertex.pos.z * uvScale);
             ring.Add(newVertex);
         }
         rings.Add(ring);

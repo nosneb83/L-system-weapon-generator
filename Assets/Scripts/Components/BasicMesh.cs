@@ -21,7 +21,7 @@ public class BasicMesh : MonoBehaviour
     protected Material lineMat;
     public List<List<Vector3>> linePoints;
 
-    public float uvScale = 0.5f;
+    public float uvScale = 1.5f;
 
     // Use this for initialization
     void Start()
@@ -383,7 +383,7 @@ public class BasicMesh : MonoBehaviour
     {
         Vertex newVertex = new Vertex();
         newVertex.pos = pos;
-        newVertex.uv = new Vector2(newVertex.pos.x / 10.0f, newVertex.pos.z / 10.0f);
+        newVertex.uv = new Vector2(newVertex.pos.x * uvScale + 0.5f, newVertex.pos.y * uvScale);
         return newVertex;
     }
 
