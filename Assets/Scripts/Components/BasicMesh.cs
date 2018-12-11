@@ -8,7 +8,7 @@ public class BasicMesh : MonoBehaviour
 {
     protected Mesh mesh;
     protected MeshFilter filter;
-    public new MeshRenderer renderer;
+    protected MeshRenderer meshRenderer;
     protected List<Vector3> vertices;
     protected List<Vector3> normals;
     protected List<Vector2> uvs;
@@ -24,15 +24,15 @@ public class BasicMesh : MonoBehaviour
     public float uvScale = 1.5f;
 
     // Use this for initialization
-    void Start()
+    void Awake()
     {
         mesh = new Mesh();
         filter = gameObject.GetComponent<MeshFilter>();
         if (filter == null) filter = gameObject.AddComponent<MeshFilter>();
         filter.mesh = mesh;
 
-        renderer = gameObject.GetComponent<MeshRenderer>();
-        if (renderer == null) renderer = gameObject.AddComponent<MeshRenderer>();
+        meshRenderer = gameObject.GetComponent<MeshRenderer>();
+        if (meshRenderer == null) meshRenderer = gameObject.AddComponent<MeshRenderer>();
         //renderer.materials = new Material[] {
         //    Resources.Load<Material>("Materials/Knife/Grip"),
         //    Resources.Load<Material>("Materials/Knife/Blade")
@@ -43,7 +43,8 @@ public class BasicMesh : MonoBehaviour
         uvs = new List<Vector2>();
         triangles = new List<List<int>>();
 
-        myUI = UIManager.Instance;
+        myUI = FindObjectOfType<UIManager>();
+        //Debug.Log("myUI");
 
         lineMat = new Material(Shader.Find("Sprites/Default"));
         linePoints = new List<List<Vector3>>();

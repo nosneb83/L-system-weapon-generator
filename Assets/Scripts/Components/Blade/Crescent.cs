@@ -15,8 +15,8 @@ public class Crescent : BasicMesh
         float edgeRatio = (myUI.parameters["edgeRatio"] as Slider).value;
         int s = (int)(myUI.parameters["circleSubdivision"] as Slider).value;
 
-        if (renderer == null) Debug.Log("null");
-        renderer.materials = new Material[] {
+        if (meshRenderer == null) Debug.Log("null");
+        meshRenderer.materials = new Material[] {
             Resources.Load<Material>("Materials/Knife/Blade")
         };
         List<List<List<Vertex>>> submeshes = new List<List<List<Vertex>>>();

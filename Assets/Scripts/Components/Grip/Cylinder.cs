@@ -14,7 +14,7 @@ public class Cylinder : BasicMesh
         float r = (myUI.parameters["gripWidth"] as Slider).value;
         int s = (int)(myUI.parameters["circleSubdivision"] as Slider).value;
 
-        renderer.materials = new Material[] {
+        meshRenderer.materials = new Material[] {
             Resources.Load<Material>("Materials/Knife/Grip")
         };
         List<List<List<Vertex>>> submeshes = new List<List<List<Vertex>>>();

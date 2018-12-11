@@ -17,7 +17,7 @@ public class TridentSword : BasicMesh
         float edgeRatio = (myUI.parameters["edgeRatio"] as Slider).value;
         float maxIter = (myUI.parameters["maxIter"] as Slider).value;
 
-        renderer.materials = new Material[] {
+        meshRenderer.materials = new Material[] {
             Resources.Load<Material>("Materials/Knife/Blade"),
             Resources.Load<Material>("Materials/Knife/Blade"),
             Resources.Load<Material>("Materials/Knife/Blade")

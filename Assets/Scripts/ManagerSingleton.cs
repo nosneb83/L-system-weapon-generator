@@ -22,15 +22,15 @@ public class ManagerSingleton : MonoBehaviour
     };
     public Target target;
 
-    private static ManagerSingleton _instance = null;
-    public static ManagerSingleton Instance
-    {
-        get
-        {
-            if (_instance == null) _instance = FindObjectOfType(typeof(ManagerSingleton)) as ManagerSingleton;
-            return _instance;
-        }
-    }
+    //private static ManagerSingleton _instance = null;
+    //public static ManagerSingleton Instance
+    //{
+    //    get
+    //    {
+    //        if (_instance == null) _instance = FindObjectOfType(typeof(ManagerSingleton)) as ManagerSingleton;
+    //        return _instance;
+    //    }
+    //}
 
     UIManager myUI;
 
@@ -55,11 +55,16 @@ public class ManagerSingleton : MonoBehaviour
 
     public bool meshReady = false;
 
-    // Use this for initialization
+    private void Awake()
+    {
+        
+    }
+
     void Start()
     {
-        if (Instance != this) Destroy(this);
-        myUI = UIManager.Instance;
+        //if (Instance != this) Destroy(this);
+        //myUI = UIManager.Instance;
+        myUI = FindObjectOfType<UIManager>();
 
         /*** 2. ***/
         //target = Target.Fork;
@@ -83,7 +88,7 @@ public class ManagerSingleton : MonoBehaviour
 
         testObj = new GameObject("Test");
         testObj.layer = 8;
-        p = testObj.AddComponent<Parameters>();
+        //p = testObj.AddComponent<Parameters>();
 
         grip = new GameObject("Grip");
         grip.transform.parent = testObj.transform;
@@ -93,11 +98,12 @@ public class ManagerSingleton : MonoBehaviour
         guard = new GameObject("Guard");
         guard.transform.parent = testObj.transform;
         guard.layer = 8;
-        guard.AddComponent<CylinderGuard>();
+        guard.AddComponent<DragonHead>();
 
         blade = new GameObject("Blade");
         blade.transform.parent = testObj.transform;
         blade.layer = 8;
+        blade.AddComponent<Knife>();
 
         blade1 = new GameObject("Blade1");
         blade1.transform.parent = blade.transform;
@@ -112,52 +118,55 @@ public class ManagerSingleton : MonoBehaviour
         //t = 0;
         //run = false;
 
-        sli_p = new List<Slider>(panel_p.GetComponentsInChildren<Slider>());
-        foreach (var item in sli_p)
-        {
-            item.onValueChanged.AddListener(delegate { MakeWeapon(); });
-        }
+        //sli_p = new List<Slider>(panel_p.GetComponentsInChildren<Slider>());
+        //foreach (var item in sli_p)
+        //{
+        //    item.onValueChanged.AddListener(delegate { MakeWeapon(); });
+        //}
 
-        StartCoroutine(AfterStart());
+        //StartCoroutine(AfterStart());
+        //myUI.ChangeCurrentWeaponType(UIManager.WeaponTypes.三尖刀);
     }
 
-    public IEnumerator AfterStart()
+    public void AfterStart()
     {
-        yield return new WaitForEndOfFrame();
+        //yield return new WaitForEndOfFrame();
 
         // remove old one
         BasicMesh oldMesh = blade.GetComponent<BasicMesh>();
-        if (oldMesh != null) Destroy(oldMesh);
+        if (oldMesh != null) DestroyImmediate(oldMesh);
+
+        if (blade.GetComponent<BasicMesh>() == null) Debug.Log("null");
         blade1.SetActive(false);
 
         // make new one
         switch (myUI.currentType)
         {
             case UIManager.WeaponTypes.刀:
-                testAxe = blade.AddComponent<Knife>();
+                blade.AddComponent<Knife>();
                 break;
             case UIManager.WeaponTypes.槍:
-                testAxe = blade.AddComponent<Sword>();
+                blade.AddComponent<Sword>();
                 break;
             case UIManager.WeaponTypes.劍:
-                testAxe = blade.AddComponent<Sword>();
+                blade.AddComponent<Sword>();
                 break;
             case UIManager.WeaponTypes.戟:
-                testAxe = blade.AddComponent<Sword>();
+                blade.AddComponent<Sword>();
                 blade1.SetActive(true);
                 break;
             case UIManager.WeaponTypes.斧:
-                testAxe = blade.AddComponent<Axe>();
+                blade.AddComponent<Axe>();
                 break;
             case UIManager.WeaponTypes.三尖刀:
-                testAxe = blade.AddComponent<TridentSword>();
+                blade.AddComponent<TridentSword>();
                 break;
             default:
                 break;
         }
         meshReady = true;
 
-        yield return new WaitForEndOfFrame();
+        //yield return new WaitForEndOfFrame();
 
         if (meshReady) MakeWeapon();
     }
@@ -172,7 +181,7 @@ public class ManagerSingleton : MonoBehaviour
 
     public void MakeWeapon()
     {
-        testAxe.linePoints.Clear();
+        //testAxe.linePoints.Clear();
 
         // parameters
         //myUI.parameters["gripLength"][0] = sli_p[0].value;
@@ -254,6 +263,8 @@ public class ManagerSingleton : MonoBehaviour
     private void CreateComponentMesh(GameObject component, Turtle turtle)
     {
         BasicMesh bm = component.GetComponent<BasicMesh>();
+        if (bm == null) Debug.Log("bm null");
+        else Debug.Log("bm not null");
         bm.CreateMesh(new Turtle(turtle));
     }
 

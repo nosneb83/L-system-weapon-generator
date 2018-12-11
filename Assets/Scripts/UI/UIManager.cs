@@ -7,16 +7,16 @@ using System.Linq;
 
 public class UIManager : MonoBehaviour
 {
-    // Singleton
-    private static UIManager _instance = null;
-    public static UIManager Instance
-    {
-        get
-        {
-            if (_instance == null) _instance = FindObjectOfType(typeof(UIManager)) as UIManager;
-            return _instance;
-        }
-    }
+    //// Singleton
+    //private static UIManager _instance = null;
+    //public static UIManager Instance
+    //{
+    //    get
+    //    {
+    //        if (_instance == null) _instance = FindObjectOfType(typeof(UIManager)) as UIManager;
+    //        return _instance;
+    //    }
+    //}
 
     ManagerSingleton mm;
 
@@ -45,6 +45,9 @@ public class UIManager : MonoBehaviour
 
     // Show line toggle
     public Toggle showLine;
+
+    // 控制slider顯示的位置
+    private int showSliderIndex;
 
     public int circleSubdivision = 50;
 
@@ -107,9 +110,10 @@ public class UIManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        // Singleton
-        if (Instance != this) Destroy(this);
-        mm = ManagerSingleton.Instance;
+        //// Singleton
+        //if (Instance != this) Destroy(this);
+        //mm = ManagerSingleton.Instance;
+        mm = FindObjectOfType<ManagerSingleton>();
 
         // Weapon type buttons
         currentType = WeaponTypes.斧;
@@ -121,42 +125,42 @@ public class UIManager : MonoBehaviour
             Button newBtn = Instantiate(chooseWeaponBtnPrefab, chooseWeaponPanel.transform);
             newBtn.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -50 - (int)item * 70);
             newBtn.GetComponentInChildren<Text>().text = item.ToString();
-            newBtn.onClick.AddListener(() => ChangeCurrentWeaponType(item));
+            newBtn.onClick.AddListener(delegate { ChangeCurrentWeaponType(item); });
             chooseWeaponBtns.Add(newBtn);
         }
 
         // Parameters initialization
         parametersSetup = new Dictionary<string, List<object>>()
         {
-            {"showLineIsOn",            new List<object>(){ false, false, true} },
-            {"circleSubdivision",       new List<object>(){ 50, 10, 100 } },
-            {"pommelSubdivision",       new List<object>(){ 50, 10, 100 } },
-            {"pommelOuterDiameter",     new List<object>(){ 1.5f, 0.0f, 3.0f } },
-            {"pommelInnerDiameter",     new List<object>(){ 0.5f, 0.0f, 3.0f } },
-            {"gripSubdivision",         new List<object>(){ 50, 10, 100 } },
-            {"gripLength",              new List<object>(){ 1.2f, 0.0f, 3.0f } },
-            {"gripWidth",               new List<object>(){ 0.1f, 0.0f, 1.0f } },
-            {"guardSubdivision",        new List<object>(){ 50, 10, 100 } },
-            {"guardLength",             new List<object>(){ 0.2f, 0.0f, 3.0f } },
-            {"guardWidth",              new List<object>(){ 1.5f, 0.0f, 3.0f } },
-            {"bladeSubdivision",        new List<object>(){ 50, 10, 100 } },
-            {"bladeLengthGrow",         new List<object>(){ 0.2f, 0.0f, 3.0f } },
-            {"bladeLengthGrowFactor",   new List<object>(){ 0.0f, 0.0f, 2.0f } },
-            {"bladeWidth",              new List<object>(){ 1.2f, 0.0f, 3.0f } },
-            {"bladeWidthFactorA",       new List<object>(){ 0.0f, 0.0f, 0.2f } },
-            {"bladeWidthFactorB",       new List<object>(){ 0.0f, 0.0f, 1.0f } },
-            {"bladeThick",              new List<object>(){ 0.0f, 0.0f, 2.0f } },
-            {"bladeWaveFreq",           new List<object>(){ 0.0f, 0.0f, 5.0f } },
-            {"bladeWaveAmp",            new List<object>(){ 0.0f, 0.0f, 5.0f } },
-            {"bladeCurv",               new List<object>(){ 2.5f, -5.0f, 5.0f } },
-            {"edgeRatio",               new List<object>(){ 0.15f, 0.0f, 1.0f } },
-            {"maxIter",                 new List<object>(){ 47, 10, 80 } },
-            {"spearGripWidth",          new List<object>(){ 0.6f, 0.0f, 3.0f } },
-            {"spearGripLength",         new List<object>(){ 5.0f, 0.0f, 10.0f } },
-            {"crescentL",               new List<object>(){ 0.75f, 0.0f, 1.5f } },
-            {"crescentW",               new List<object>(){ 0.3f, 0.0f, 1.0f } },
-            {"crescentD",               new List<object>(){ 0.6f, 0.0f, 0.999f } },
-            {"crescentT",               new List<object>(){ 0.3f, 0.0f, 1.0f } }
+            {"showLineIsOn",            new List<object>(){ false, false, true, "顯示L-system"} },
+            {"circleSubdivision",       new List<object>(){ 50, 10, 100, "細緻度" } },
+            {"pommelSubdivision",       new List<object>(){ 50, 10, 100, "pommelSubdivision" } },
+            {"pommelOuterDiameter",     new List<object>(){ 1.5f, 0.0f, 3.0f, "pommelOuterDiameter" } },
+            {"pommelInnerDiameter",     new List<object>(){ 0.5f, 0.0f, 3.0f, "pommelInnerDiameter" } },
+            {"gripSubdivision",         new List<object>(){ 50, 10, 100, "gripSubdivision" } },
+            {"gripLength",              new List<object>(){ 1.2f, 0.0f, 2.0f, "柄長" } },
+            {"gripWidth",               new List<object>(){ 0.1f, 0.0f, 0.1f, "柄徑" } },
+            {"guardSubdivision",        new List<object>(){ 50, 10, 100, "guardSubdivision" } },
+            {"guardLength",             new List<object>(){ 0.1f, 0.0f, 0.3f, "護手長" } },
+            {"guardWidth",              new List<object>(){ 0.3f, 0.0f, 0.5f, "護手寬" } },
+            {"bladeSubdivision",        new List<object>(){ 50, 10, 100, "bladeSubdivision" } },
+            {"bladeLengthGrow",         new List<object>(){ 0.2f, 0.0f, 0.5f, "刃長" } },
+            {"bladeLengthGrowFactor",   new List<object>(){ 0.0f, 0.0f, 1.0f, "刃長係數A" } },
+            {"bladeWidth",              new List<object>(){ 0.2f, 0.0f, 0.3f, "刃寬" } },
+            {"bladeWidthFactorA",       new List<object>(){ 0.0f, 0.0f, 0.02f, "刃寬係數A" } },
+            {"bladeWidthFactorB",       new List<object>(){ 1.0f, 0.0f, 1.0f, "刃寬係數B" } },
+            {"bladeThick",              new List<object>(){ 0.0f, 0.0f, 0.1f, "刃厚" } },
+            {"bladeWaveFreq",           new List<object>(){ 0.0f, 0.0f, 5.0f, "刀刃蛇形頻率" } },
+            {"bladeWaveAmp",            new List<object>(){ 0.0f, 0.0f, 5.0f, "刀刃蛇形振幅" } },
+            {"bladeCurv",               new List<object>(){ 2.5f, -3.0f, 3.0f, "刃彎" } },
+            {"edgeRatio",               new List<object>(){ 0.15f, 0.0f, 1.0f, "刃鋒比例" } },
+            {"maxIter",                 new List<object>(){ 47, 10, 80, "迭代次數" } },
+            {"spearGripWidth",          new List<object>(){ 0.6f, 0.0f, 3.0f, "spearGripWidth" } },
+            {"spearGripLength",         new List<object>(){ 5.0f, 0.0f, 10.0f, "spearGripLength" } },
+            {"crescentL",               new List<object>(){ 0.75f, 0.0f, 1.5f, "特殊刃長" } },
+            {"crescentW",               new List<object>(){ 0.3f, 0.0f, 1.0f, "特殊刃寬" } },
+            {"crescentD",               new List<object>(){ 0.6f, 0.0f, 0.999f, "特殊刃凹" } },
+            {"crescentT",               new List<object>(){ 0.3f, 0.0f, 1.0f, "特殊刃厚" } }
         };
 
         // slider setup
@@ -167,40 +171,31 @@ public class UIManager : MonoBehaviour
         {
             KeyValuePair<string, List<object>> pair = parametersSetup.ElementAt(i);
             Type pType = pair.Value[0].GetType();
+
+            Slider newSlider = Instantiate(parameterSliderPrefab, parameterPanel.transform);
+            newSlider.name = pair.Key;
             if (pType == typeof(float))
             {
-                Text newText = Instantiate(parameterNamePrefab, parameterPanel.transform);
-                newText.name = pair.Key;
-                newText.GetComponent<RectTransform>().anchoredPosition = new Vector2(-170, -i * 20);
-                newText.text = pair.Key;
-
-                Slider newSlider = Instantiate(parameterSliderPrefab, parameterPanel.transform);
-                newSlider.name = pair.Key + "Value";
-                newSlider.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -i * 20);
                 newSlider.maxValue = (float)(pair.Value[2]);
                 newSlider.minValue = (float)pair.Value[1];
                 newSlider.value = (float)pair.Value[0];
-                if (pType == typeof(int)) newSlider.wholeNumbers = true;
-                newSlider.onValueChanged.AddListener(delegate { mm.MakeWeapon(); });
-                parameters.Add(pair.Key, newSlider);
             }
             else if (pType == typeof(int))
             {
-                Text newText = Instantiate(parameterNamePrefab, parameterPanel.transform);
-                newText.name = pair.Key;
-                newText.GetComponent<RectTransform>().anchoredPosition = new Vector2(-170, -i * 20);
-                newText.text = pair.Key;
-
-                Slider newSlider = Instantiate(parameterSliderPrefab, parameterPanel.transform);
-                newSlider.name = pair.Key + "Value";
-                newSlider.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -i * 20);
                 newSlider.maxValue = (int)(pair.Value[2]);
                 newSlider.minValue = (int)pair.Value[1];
                 newSlider.value = (int)pair.Value[0];
-                if (pType == typeof(int)) newSlider.wholeNumbers = true;
-                newSlider.onValueChanged.AddListener(delegate { mm.MakeWeapon(); });
-                parameters.Add(pair.Key, newSlider);
+                newSlider.wholeNumbers = true;
             }
+            //newSlider.onValueChanged.AddListener(delegate { mm.MakeWeapon(); });
+            newSlider.gameObject.SetActive(false);
+
+            Text newText = Instantiate(parameterNamePrefab, newSlider.transform);
+            newText.GetComponent<RectTransform>().anchoredPosition = new Vector2(-170, 0);
+            newText.text = (string)pair.Value[3];
+            newText.alignment = TextAnchor.MiddleLeft;
+
+            parameters.Add(pair.Key, newSlider);
         }
 
         // Show line
@@ -218,97 +213,107 @@ public class UIManager : MonoBehaviour
 
     }
 
-    void ChangeCurrentWeaponType(WeaponTypes type)
+    public void ChangeCurrentWeaponType(WeaponTypes type)
     {
         mm.meshReady = false;
         currentType = type;
 
+        foreach (KeyValuePair<string, Selectable> item in parameters)
+        {
+            item.Value.gameObject.SetActive(false);
+        }
+
         // set init params
+        showSliderIndex = 0;
         switch (type)
         {
             case WeaponTypes.刀:
-                (parameters["gripLength"] as Slider).value = 0.35f;
-                (parameters["gripWidth"] as Slider).value = 0.05f;
-                (parameters["bladeLengthGrow"] as Slider).value = 0.4f;
-                (parameters["bladeLengthGrowFactor"] as Slider).value = 1.0f;
-                (parameters["bladeWidth"] as Slider).value = 0.2f;
-                (parameters["bladeWidthFactorA"] as Slider).value = 0.016f;
-                (parameters["bladeWidthFactorB"] as Slider).value = 1.0f;
-                (parameters["bladeThick"] as Slider).value = 0.06f;
-                (parameters["bladeCurv"] as Slider).value = 0.3f;
-                (parameters["edgeRatio"] as Slider).value = 0.3f;
+                ShowSlider("gripLength", 0.35f);
+                ShowSlider("gripWidth", 0.05f);
+                ShowSlider("bladeLengthGrow", 0.4f);
+                ShowSlider("bladeLengthGrowFactor", 1.0f);
+                ShowSlider("bladeWidth", 0.2f);
+                ShowSlider("bladeWidthFactorA", 0.016f);
+                ShowSlider("bladeWidthFactorB", 1.0f);
+                ShowSlider("bladeThick", 0.06f);
+                ShowSlider("bladeCurv", 0.3f);
+                ShowSlider("edgeRatio", 0.3f);
                 break;
             case WeaponTypes.槍:
-                (parameters["gripLength"] as Slider).value = 1.5f;
-                (parameters["gripWidth"] as Slider).value = 0.025f;
-                (parameters["bladeLengthGrow"] as Slider).value = 0.007f;
-                (parameters["bladeLengthGrowFactor"] as Slider).value = 0.0f;
-                (parameters["bladeWidth"] as Slider).value = 0.06f;
-                (parameters["bladeWidthFactorA"] as Slider).value = 0.003f;
-                (parameters["bladeWidthFactorB"] as Slider).value = 1.0f;
-                (parameters["bladeThick"] as Slider).value = 0.045f;
-                (parameters["bladeCurv"] as Slider).value = 0.0f;
+                ShowSlider("gripLength", 1.5f);
+                ShowSlider("gripWidth", 0.025f);
+                ShowSlider("bladeLengthGrow", 0.007f);
+                ShowSlider("bladeLengthGrowFactor", 0.0f);
+                ShowSlider("bladeWidth", 0.06f);
+                ShowSlider("bladeWidthFactorA", 0.003f);
+                ShowSlider("bladeThick", 0.045f);
+                ShowSlider("bladeCurv", 0.0f);
                 break;
             case WeaponTypes.劍:
-                (parameters["gripLength"] as Slider).value = 0.35f;
-                (parameters["gripWidth"] as Slider).value = 0.05f;
-                (parameters["bladeLengthGrow"] as Slider).value = 0.4f;
-                (parameters["bladeLengthGrowFactor"] as Slider).value = 1.0f;
-                (parameters["bladeWidth"] as Slider).value = 0.075f;
-                (parameters["bladeWidthFactorA"] as Slider).value = 0.004f;
-                (parameters["bladeWidthFactorB"] as Slider).value = 1.0f;
-                (parameters["bladeThick"] as Slider).value = 0.03f;
-                (parameters["bladeCurv"] as Slider).value = 0.0f;
+                ShowSlider("gripLength", 0.35f);
+                ShowSlider("gripWidth", 0.05f);
+                ShowSlider("bladeLengthGrow", 0.4f);
+                ShowSlider("bladeLengthGrowFactor", 1.0f);
+                ShowSlider("bladeWidth", 0.075f);
+                ShowSlider("bladeWidthFactorA", 0.004f);
+                ShowSlider("bladeThick", 0.03f);
+                ShowSlider("bladeCurv", 0.0f);
                 break;
             case WeaponTypes.戟:
-                (parameters["gripLength"] as Slider).value = 1.7f;
-                (parameters["gripWidth"] as Slider).value = 0.05f;
-                (parameters["bladeLengthGrow"] as Slider).value = 0.01f;
-                (parameters["bladeLengthGrowFactor"] as Slider).value = 0.0f;
-                (parameters["bladeWidth"] as Slider).value = 0.1f;
-                (parameters["bladeWidthFactorA"] as Slider).value = 0.003f;
-                (parameters["bladeWidthFactorB"] as Slider).value = 1.0f;
-                (parameters["bladeThick"] as Slider).value = 0.045f;
-                (parameters["bladeCurv"] as Slider).value = 0.0f;
-                (parameters["edgeRatio"] as Slider).value = 0.4f;
-                (parameters["crescentL"] as Slider).value = 0.4f;
-                (parameters["crescentW"] as Slider).value = 0.33f;
-                (parameters["crescentD"] as Slider).value = 0.45f;
-                (parameters["crescentT"] as Slider).value = 0.1f;
+                ShowSlider("gripLength", 1.7f);
+                ShowSlider("gripWidth", 0.05f);
+                ShowSlider("bladeLengthGrow", 0.01f);
+                ShowSlider("bladeLengthGrowFactor", 0.0f);
+                ShowSlider("bladeWidth", 0.1f);
+                ShowSlider("bladeWidthFactorA", 0.003f);
+                ShowSlider("bladeThick", 0.045f);
+                ShowSlider("bladeCurv", 0.0f);
+                ShowSlider("edgeRatio", 0.4f);
+                ShowSlider("crescentL", 0.4f);
+                ShowSlider("crescentW", 0.33f);
+                ShowSlider("crescentD", 0.45f);
+                ShowSlider("crescentT", 0.1f);
                 break;
             case WeaponTypes.斧:
-                (parameters["gripLength"] as Slider).value = 1.5f;
-                (parameters["gripWidth"] as Slider).value = 0.04f;
-                (parameters["bladeWidth"] as Slider).value = 1.2f;
-                (parameters["bladeCurv"] as Slider).value = 3.0f;
-                (parameters["crescentL"] as Slider).value = 0.4f;
-                (parameters["crescentW"] as Slider).value = 0.15f;
-                (parameters["crescentD"] as Slider).value = 0.6f;
-                (parameters["crescentT"] as Slider).value = 0.3f;
+                ShowSlider("gripLength", 1.5f);
+                ShowSlider("gripWidth", 0.04f);
+                ShowSlider("bladeCurv", 3.0f);
+                ShowSlider("crescentL", 0.4f);
+                ShowSlider("crescentW", 0.15f);
+                ShowSlider("crescentD", 0.6f);
+                ShowSlider("crescentT", 0.3f);
                 break;
             case WeaponTypes.三尖刀:
-                (parameters["gripLength"] as Slider).value = 1.25f;
-                (parameters["gripWidth"] as Slider).value = 0.04f;
-                (parameters["guardLength"] as Slider).value = 0.05f;
-                (parameters["guardWidth"] as Slider).value = 0.11f;
-                (parameters["bladeLengthGrow"] as Slider).value = 0.025f;
-                (parameters["bladeLengthGrowFactor"] as Slider).value = 0.2f;
-                (parameters["bladeWidth"] as Slider).value = 0.1f;
-                (parameters["bladeWidthFactorA"] as Slider).value = 0.0015f;
-                (parameters["bladeWidthFactorB"] as Slider).value = 1.0f;
-                (parameters["bladeThick"] as Slider).value = 0.075f;
-                (parameters["bladeCurv"] as Slider).value = 1.25f;
+                ShowSlider("gripLength", 1.25f);
+                ShowSlider("gripWidth", 0.04f);
+                ShowSlider("guardLength", 0.05f);
+                ShowSlider("guardWidth", 0.11f);
+                ShowSlider("bladeLengthGrow", 0.025f);
+                ShowSlider("bladeLengthGrowFactor", 0.2f);
+                ShowSlider("bladeWidth", 0.1f);
+                ShowSlider("bladeWidthFactorA", 0.0015f);
+                ShowSlider("bladeThick", 0.075f);
+                ShowSlider("bladeCurv", 1.25f);
                 break;
             default:
                 break;
         }
 
-        StartCoroutine(mm.AfterStart());
+        mm.AfterStart();
+    }
+
+    void ShowSlider(string sliderName, float value)
+    {
+        showSliderIndex++;
+        Slider slider = parameters[sliderName] as Slider;
+        slider.value = value;
+        slider.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -showSliderIndex * 25);
+        slider.gameObject.SetActive(true);
     }
 
     void ShowLSystemLine(Toggle change)
     {
         //parameters["showLineIsOn"][0] = showLine.isOn;
-        mm.MakeWeapon();
+        //mm.MakeWeapon();
     }
 }

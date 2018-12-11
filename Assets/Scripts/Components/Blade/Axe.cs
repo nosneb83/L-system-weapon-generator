@@ -14,7 +14,7 @@ public class Axe : BasicMesh
         float c = (myUI.parameters["bladeCurv"] as Slider).value;
         int s = (int)(myUI.parameters["circleSubdivision"] as Slider).value;
 
-        renderer.materials = new Material[] {
+        meshRenderer.materials = new Material[] {
             Resources.Load<Material>("Materials/Knife/Blade")
         };
         List<List<List<Vertex>>> submeshes = new List<List<List<Vertex>>>();

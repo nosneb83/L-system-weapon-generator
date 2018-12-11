@@ -14,7 +14,7 @@ public class CylinderGuard : BasicMesh
         float r = (myUI.parameters["guardWidth"] as Slider).value;
         int s = (int)(myUI.parameters["circleSubdivision"] as Slider).value;
 
-        renderer.materials = new Material[] {
+        meshRenderer.materials = new Material[] {
             Resources.Load<Material>("Materials/Knife/Guard")
         };
         List<List<List<Vertex>>> submeshes = new List<List<List<Vertex>>>();

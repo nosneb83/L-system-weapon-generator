@@ -13,12 +13,14 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile></CompilerResponseFile>
+    <CompilerResponseFile>
+    </CompilerResponseFile>
     <UnityProjectGenerator>VSTU</UnityProjectGenerator>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>WebGL:20</UnityBuildTarget>
     <UnityVersion>2017.4.10f1</UnityVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <LangVersion>4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -250,6 +252,7 @@
     <Compile Include="Assets\Scripts\Components\Grip\Cylinder.cs" />
     <Compile Include="Assets\Scripts\Components\Guard\CylinderGuard.cs" />
     <Compile Include="Assets\Scripts\Components\Guard\Diamond.cs" />
+    <Compile Include="Assets\Scripts\Components\Guard\DragonHead.cs" />
     <Compile Include="Assets\Scripts\Components\Parameters.cs" />
     <Compile Include="Assets\Scripts\Components\Pommel\Ring.cs" />
     <Compile Include="Assets\Scripts\DataStructures.cs" />
@@ -263,7 +266,6 @@
     <Compile Include="Assets\Scripts\Spear1.cs" />
     <Compile Include="Assets\Scripts\Sword1.cs" />
     <Compile Include="Assets\Scripts\TurtleInterpretation.cs" />
-    <Compile Include="Assets\Scripts\UI\ChooseWeapon.cs" />
     <Compile Include="Assets\Scripts\UI\UIManager.cs" />
     <Compile Include="Assets\Simple UI\Samples\IconPreview.cs" />
   </ItemGroup>
