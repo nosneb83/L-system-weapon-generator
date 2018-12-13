@@ -137,6 +137,8 @@ public class UIManager : MonoBehaviour
             {"pommelSubdivision",       new List<object>(){ 50, 10, 100, "pommelSubdivision" } },
             {"pommelOuterDiameter",     new List<object>(){ 1.5f, 0.0f, 3.0f, "pommelOuterDiameter" } },
             {"pommelInnerDiameter",     new List<object>(){ 0.5f, 0.0f, 3.0f, "pommelInnerDiameter" } },
+            {"pommelLength",            new List<object>(){ 0.5f, 0.0f, 1.0f, "pommel長" } },
+            {"pommelWidth",             new List<object>(){ 0.3f, 0.0f, 0.5f, "pommel寬" } },
             {"gripSubdivision",         new List<object>(){ 50, 10, 100, "gripSubdivision" } },
             {"gripLength",              new List<object>(){ 1.2f, 0.0f, 2.0f, "柄長" } },
             {"gripWidth",               new List<object>(){ 0.1f, 0.0f, 0.1f, "柄徑" } },
@@ -187,7 +189,7 @@ public class UIManager : MonoBehaviour
                 newSlider.value = (int)pair.Value[0];
                 newSlider.wholeNumbers = true;
             }
-            //newSlider.onValueChanged.AddListener(delegate { mm.MakeWeapon(); });
+            newSlider.onValueChanged.AddListener(delegate { mm.MakeWeapon(); });
             newSlider.gameObject.SetActive(false);
 
             Text newText = Instantiate(parameterNamePrefab, newSlider.transform);
@@ -230,6 +232,7 @@ public class UIManager : MonoBehaviour
             case WeaponTypes.刀:
                 ShowSlider("gripLength", 0.35f);
                 ShowSlider("gripWidth", 0.05f);
+                ShowSlider("guardLength", 0.05f);
                 ShowSlider("bladeLengthGrow", 0.4f);
                 ShowSlider("bladeLengthGrowFactor", 1.0f);
                 ShowSlider("bladeWidth", 0.2f);
@@ -240,18 +243,19 @@ public class UIManager : MonoBehaviour
                 ShowSlider("edgeRatio", 0.3f);
                 break;
             case WeaponTypes.槍:
-                ShowSlider("gripLength", 1.5f);
-                ShowSlider("gripWidth", 0.025f);
-                ShowSlider("bladeLengthGrow", 0.007f);
+                ShowSlider("gripLength", 1.7f);
+                ShowSlider("gripWidth", 0.03f);
+                ShowSlider("bladeLengthGrow", 0.01f);
                 ShowSlider("bladeLengthGrowFactor", 0.0f);
-                ShowSlider("bladeWidth", 0.06f);
+                ShowSlider("bladeWidth", 0.03f);
                 ShowSlider("bladeWidthFactorA", 0.003f);
-                ShowSlider("bladeThick", 0.045f);
+                ShowSlider("bladeThick", 0.03f);
                 ShowSlider("bladeCurv", 0.0f);
                 break;
             case WeaponTypes.劍:
                 ShowSlider("gripLength", 0.35f);
                 ShowSlider("gripWidth", 0.05f);
+                ShowSlider("guardLength", 0.05f);
                 ShowSlider("bladeLengthGrow", 0.4f);
                 ShowSlider("bladeLengthGrowFactor", 1.0f);
                 ShowSlider("bladeWidth", 0.075f);
@@ -261,17 +265,17 @@ public class UIManager : MonoBehaviour
                 break;
             case WeaponTypes.戟:
                 ShowSlider("gripLength", 1.7f);
-                ShowSlider("gripWidth", 0.05f);
+                ShowSlider("gripWidth", 0.03f);
                 ShowSlider("bladeLengthGrow", 0.01f);
                 ShowSlider("bladeLengthGrowFactor", 0.0f);
-                ShowSlider("bladeWidth", 0.1f);
+                ShowSlider("bladeWidth", 0.03f);
                 ShowSlider("bladeWidthFactorA", 0.003f);
-                ShowSlider("bladeThick", 0.045f);
+                ShowSlider("bladeThick", 0.03f);
                 ShowSlider("bladeCurv", 0.0f);
-                ShowSlider("edgeRatio", 0.4f);
-                ShowSlider("crescentL", 0.4f);
-                ShowSlider("crescentW", 0.33f);
-                ShowSlider("crescentD", 0.45f);
+                ShowSlider("edgeRatio", 0.5f);
+                ShowSlider("crescentL", 0.25f);
+                ShowSlider("crescentW", 0.25f);
+                ShowSlider("crescentD", 0.4f);
                 ShowSlider("crescentT", 0.1f);
                 break;
             case WeaponTypes.斧:

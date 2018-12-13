@@ -35,7 +35,7 @@ public class Knife : BasicMesh
             rings.Add(KnifeRing(new Turtle(turtle), sectionWidth, sectionThick, edgeRatio));
             if (i < maxIter)
             {
-                turtle.RotateAroundUp(bladeCurv);
+                turtle.RotateAroundUp(-bladeCurv);
                 turtle = MoveTurtle(turtle, turtle.f, bladeLengthGrow / Mathf.Pow(i + 1, bladeLengthGrowFactor));
             }
         }
@@ -52,20 +52,20 @@ public class Knife : BasicMesh
 
         Turtle branchTurtle = new Turtle(turtle);
         branchTurtle = MoveTurtle(branchTurtle, branchTurtle.u, sectionThick);
-        temp.Push(CreateVertex(branchTurtle.p));
+        ring.Add(CreateVertex(branchTurtle.p));
         branchTurtle = new Turtle(turtle);
         branchTurtle = MoveTurtle(branchTurtle, -branchTurtle.u, sectionThick);
-        ring.Add(CreateVertex(branchTurtle.p));
+        temp.Push(CreateVertex(branchTurtle.p));
 
-        turtle = MoveTurtle(turtle, -turtle.r, sectionWidth * (1 - edgeRatio));
+        turtle = MoveTurtle(turtle, turtle.r, sectionWidth * (1 - edgeRatio));
         branchTurtle = new Turtle(turtle);
         branchTurtle = MoveTurtle(branchTurtle, branchTurtle.u, sectionThick);
-        temp.Push(CreateVertex(branchTurtle.p));
+        ring.Add(CreateVertex(branchTurtle.p));
         branchTurtle = new Turtle(turtle);
         branchTurtle = MoveTurtle(branchTurtle, -branchTurtle.u, sectionThick);
-        ring.Add(CreateVertex(branchTurtle.p));
+        temp.Push(CreateVertex(branchTurtle.p));
 
-        turtle = MoveTurtle(turtle, -turtle.r, sectionWidth * edgeRatio);
+        turtle = MoveTurtle(turtle, turtle.r, sectionWidth * edgeRatio);
         ring.Add(CreateVertex(turtle.p));
 
         foreach (var item in temp)

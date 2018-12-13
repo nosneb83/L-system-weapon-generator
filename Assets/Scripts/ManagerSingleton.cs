@@ -136,20 +136,23 @@ public class ManagerSingleton : MonoBehaviour
         BasicMesh oldMesh = blade.GetComponent<BasicMesh>();
         if (oldMesh != null) DestroyImmediate(oldMesh);
 
-        if (blade.GetComponent<BasicMesh>() == null) Debug.Log("null");
+        //if (blade.GetComponent<BasicMesh>() == null) Debug.Log("null");
         blade1.SetActive(false);
+        guard.SetActive(false);
 
         // make new one
         switch (myUI.currentType)
         {
             case UIManager.WeaponTypes.刀:
                 blade.AddComponent<Knife>();
+                guard.SetActive(true);
                 break;
             case UIManager.WeaponTypes.槍:
                 blade.AddComponent<Sword>();
                 break;
             case UIManager.WeaponTypes.劍:
                 blade.AddComponent<Sword>();
+                guard.SetActive(true);
                 break;
             case UIManager.WeaponTypes.戟:
                 blade.AddComponent<Sword>();
@@ -160,6 +163,7 @@ public class ManagerSingleton : MonoBehaviour
                 break;
             case UIManager.WeaponTypes.三尖刀:
                 blade.AddComponent<TridentSword>();
+                guard.SetActive(true);
                 break;
             default:
                 break;
@@ -237,7 +241,7 @@ public class ManagerSingleton : MonoBehaviour
                 CreateComponentMesh(blade, new Turtle(turtle));
                 break;
             case UIManager.WeaponTypes.刀:
-                turtle.Go(turtle.r, (myUI.parameters["bladeWidth"] as Slider).value * 0.4f);
+                turtle.Go(-turtle.r, (myUI.parameters["bladeWidth"] as Slider).value * 0.5f);
                 CreateComponentMesh(blade, new Turtle(turtle));
                 break;
             case UIManager.WeaponTypes.戟:
@@ -263,8 +267,8 @@ public class ManagerSingleton : MonoBehaviour
     private void CreateComponentMesh(GameObject component, Turtle turtle)
     {
         BasicMesh bm = component.GetComponent<BasicMesh>();
-        if (bm == null) Debug.Log("bm null");
-        else Debug.Log("bm not null");
+        //if (bm == null) Debug.Log("bm null");
+        //else Debug.Log("bm not null");
         bm.CreateMesh(new Turtle(turtle));
     }
 

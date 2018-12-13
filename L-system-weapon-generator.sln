@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "L-system-weapon-generator",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "L-system-weapon-generator.Plugins", "L-system-weapon-generator.Plugins.csproj", "{F1E6EA45-5AFE-A1FA-27C7-AE4D4DE6C404}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "L-system-weapon-generator.Editor", "L-system-weapon-generator.Editor.csproj", "{EAC43EFD-2455-72B6-797D-A941EE82CA2F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +21,10 @@ Global
 		{F1E6EA45-5AFE-A1FA-27C7-AE4D4DE6C404}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F1E6EA45-5AFE-A1FA-27C7-AE4D4DE6C404}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F1E6EA45-5AFE-A1FA-27C7-AE4D4DE6C404}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EAC43EFD-2455-72B6-797D-A941EE82CA2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAC43EFD-2455-72B6-797D-A941EE82CA2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAC43EFD-2455-72B6-797D-A941EE82CA2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAC43EFD-2455-72B6-797D-A941EE82CA2F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
