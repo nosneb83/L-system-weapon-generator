@@ -179,8 +179,8 @@ public class ManagerSingleton : MonoBehaviour
     void Update()
     {
         //onIteration();
-        testObj.transform.position = new Vector3(0.3f, 0.65f + 0.05f * Mathf.Sin(Time.time * 1.5f), testObj.transform.position.z);
-        testObj.transform.localEulerAngles = new Vector3(-7.5f, 7.5f, 20f);
+        testObj.transform.position = new Vector3(-0.4f, 0.65f + 0.05f * Mathf.Sin(Time.time * 1.5f), testObj.transform.position.z);
+        testObj.transform.localEulerAngles = new Vector3(-7.5f, 187.5f, 20f);
     }
 
     public void MakeWeapon()

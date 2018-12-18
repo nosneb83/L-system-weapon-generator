@@ -57,9 +57,28 @@ public class DragonHead : BasicMesh
         for (int i = 0; i < dragonFBX.subMeshCount; i++)
         {
             List<int> triangleSubmesh = new List<int>();
+            int vertexTemp = 0;
+            int vertexFlag = 0;
             foreach (var item in dragonFBX.GetTriangles(i))
             {
-                triangleSubmesh.Add(item);
+                switch (vertexFlag)
+                {
+                    case 0:
+                        triangleSubmesh.Add(item);
+                        vertexFlag++;
+                        break;
+                    case 1:
+                        vertexTemp = item;
+                        vertexFlag++;
+                        break;
+                    case 2:
+                        triangleSubmesh.Add(item);
+                        triangleSubmesh.Add(vertexTemp);
+                        vertexFlag = 0;
+                        break;
+                    default:
+                        break;
+                }
             }
             triangles.Add(triangleSubmesh);
             mesh.SetTriangles(triangles[i], i);

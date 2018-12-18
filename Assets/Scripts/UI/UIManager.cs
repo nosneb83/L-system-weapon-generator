@@ -294,7 +294,7 @@ public class UIManager : MonoBehaviour
                 ShowSlider("guardWidth", 0.11f);
                 ShowSlider("bladeLengthGrow", 0.025f);
                 ShowSlider("bladeLengthGrowFactor", 0.2f);
-                ShowSlider("bladeWidth", 0.1f);
+                ShowSlider("bladeWidth", 0.08f);
                 ShowSlider("bladeWidthFactorA", 0.0015f);
                 ShowSlider("bladeThick", 0.075f);
                 ShowSlider("bladeCurv", 1.25f);
