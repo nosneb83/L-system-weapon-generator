@@ -55,9 +55,10 @@ public class ManagerSingleton : MonoBehaviour
 
     public bool meshReady = false;
 
+    public SpearHair spearHair;
+
     private void Awake()
     {
-        
     }
 
     void Start()
@@ -110,6 +111,10 @@ public class ManagerSingleton : MonoBehaviour
         blade1.layer = 8;
         blade1.AddComponent<Crescent>();
 
+        //GameObject spearHairObj = new GameObject("SpearHair");
+        //spearHair = spearHairObj.AddComponent<SpearHair>();
+        //spearHair.SetMesh();
+
         //testAxe = blade.AddComponent<Axe>();
 
         //theString = new List<Symbol>();
@@ -158,13 +163,16 @@ public class ManagerSingleton : MonoBehaviour
                 blade.AddComponent<Sword>();
                 blade1.SetActive(true);
                 break;
-            case UIManager.WeaponTypes.斧:
+            case UIManager.WeaponTypes.斧鉞:
                 blade.AddComponent<Axe>();
                 break;
             case UIManager.WeaponTypes.三尖刀:
                 blade.AddComponent<TridentSword>();
                 guard.SetActive(true);
                 break;
+            //case UIManager.WeaponTypes.自訂:
+            //    guard.SetActive(true);
+            //    break;
             default:
                 break;
         }
@@ -179,7 +187,8 @@ public class ManagerSingleton : MonoBehaviour
     void Update()
     {
         //onIteration();
-        testObj.transform.position = new Vector3(-0.4f, 0.65f + 0.05f * Mathf.Sin(Time.time * 1.5f), testObj.transform.position.z);
+        //testObj.transform.position = new Vector3(-0.4f, 0.65f + 0.05f * Mathf.Sin(Time.time * 1.5f), testObj.transform.position.z);
+        testObj.transform.position = new Vector3(-0.4f, 0.65f, testObj.transform.position.z);
         testObj.transform.localEulerAngles = new Vector3(-7.5f, 187.5f, 20f);
     }
 
@@ -206,7 +215,7 @@ public class ManagerSingleton : MonoBehaviour
             case UIManager.WeaponTypes.刀:
             case UIManager.WeaponTypes.劍:
             case UIManager.WeaponTypes.槍:
-            case UIManager.WeaponTypes.斧:
+            case UIManager.WeaponTypes.斧鉞:
             case UIManager.WeaponTypes.三尖刀:
                 CreateComponentMesh(grip, new Turtle(turtle));
                 turtle.Go(turtle.f, (myUI.parameters["gripLength"] as Slider).value);
@@ -254,7 +263,7 @@ public class ManagerSingleton : MonoBehaviour
                 turtle.Go(turtle.f, (myUI.parameters["gripLength"] as Slider).value * 0.3f);
                 CreateComponentMesh(blade, new Turtle(turtle));
                 break;
-            case UIManager.WeaponTypes.斧:
+            case UIManager.WeaponTypes.斧鉞:
                 turtle.RotateAroundUp(90);
                 turtle.Go(-turtle.f, (myUI.parameters["gripWidth"] as Slider).value);
                 CreateComponentMesh(blade, new Turtle(turtle));

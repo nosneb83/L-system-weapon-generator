@@ -23,12 +23,12 @@ public class UIManager : MonoBehaviour
     // Weapon type
     public enum WeaponTypes
     {
+        三尖刀,
         刀,
         槍,
         劍,
         戟,
-        斧,
-        三尖刀
+        斧鉞
     }
     public WeaponTypes currentType;
     public GameObject chooseWeaponPanel;
@@ -116,7 +116,7 @@ public class UIManager : MonoBehaviour
         mm = FindObjectOfType<ManagerSingleton>();
 
         // Weapon type buttons
-        currentType = WeaponTypes.斧;
+        currentType = WeaponTypes.斧鉞;
 
         chooseWeaponBtnPrefab = Resources.Load<Button>("Prefabs/ChooseWeaponButton");
         chooseWeaponBtns = new List<Button>();
@@ -147,7 +147,7 @@ public class UIManager : MonoBehaviour
             {"guardWidth",              new List<object>(){ 0.3f, 0.0f, 0.5f, "護手寬" } },
             {"bladeSubdivision",        new List<object>(){ 50, 10, 100, "bladeSubdivision" } },
             {"bladeLengthGrow",         new List<object>(){ 0.2f, 0.0f, 0.5f, "刃長" } },
-            {"bladeLengthGrowFactor",   new List<object>(){ 0.0f, 0.0f, 1.0f, "刃長係數A" } },
+            {"bladeLengthGrowFactor",   new List<object>(){ 0.0f, 0.0f, 2.0f, "刃長係數A" } },
             {"bladeWidth",              new List<object>(){ 0.2f, 0.0f, 0.3f, "刃寬" } },
             {"bladeWidthFactorA",       new List<object>(){ 0.0f, 0.0f, 0.02f, "刃寬係數A" } },
             {"bladeWidthFactorB",       new List<object>(){ 1.0f, 0.0f, 1.0f, "刃寬係數B" } },
@@ -278,7 +278,7 @@ public class UIManager : MonoBehaviour
                 ShowSlider("crescentD", 0.4f);
                 ShowSlider("crescentT", 0.1f);
                 break;
-            case WeaponTypes.斧:
+            case WeaponTypes.斧鉞:
                 ShowSlider("gripLength", 1.5f);
                 ShowSlider("gripWidth", 0.04f);
                 ShowSlider("bladeCurv", 3.0f);
@@ -299,6 +299,23 @@ public class UIManager : MonoBehaviour
                 ShowSlider("bladeThick", 0.075f);
                 ShowSlider("bladeCurv", 1.25f);
                 break;
+            //case WeaponTypes.自訂:
+            //    ShowSlider("gripLength", 1.25f);
+            //    ShowSlider("gripWidth", 0.04f);
+            //    ShowSlider("guardLength", 0.05f);
+            //    ShowSlider("guardWidth", 0.11f);
+            //    ShowSlider("bladeLengthGrow", 0.025f);
+            //    ShowSlider("bladeLengthGrowFactor", 0.2f);
+            //    ShowSlider("bladeWidth", 0.08f);
+            //    ShowSlider("bladeWidthFactorA", 0.0015f);
+            //    ShowSlider("bladeThick", 0.075f);
+            //    ShowSlider("bladeCurv", 1.25f);
+            //    ShowSlider("edgeRatio", 0.5f);
+            //    ShowSlider("crescentL", 0.25f);
+            //    ShowSlider("crescentW", 0.25f);
+            //    ShowSlider("crescentD", 0.4f);
+            //    ShowSlider("crescentT", 0.1f);
+            //    break;
             default:
                 break;
         }

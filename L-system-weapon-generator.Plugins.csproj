@@ -221,6 +221,9 @@
     <Reference Include="UnityEngine.SpatialTracking">
       <HintPath>D:/Program Files/Unity/2017.4.10f1/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/RuntimeEditor/UnityEngine.SpatialTracking.dll</HintPath>
     </Reference>
+    <Reference Include="UnityFbxPrefab">
+      <HintPath>Assets/FbxExporters/UnityFbxPrefab.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.Analytics">
       <HintPath>C:/Users/BensonLee/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.analytics@2.0.13/UnityEngine.Analytics.dll</HintPath>
     </Reference>
@@ -370,6 +373,14 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\3DForge\Fantasy_Interiors\Villages_&amp;_Towns\Documents\Village_Interiors_User_Guid_v1.3.txt" />
+    <None Include="Assets\FbxExporters\Editor\FbxSdk\LICENSE.txt" />
+    <None Include="Assets\FbxExporters\Editor\FbxSdk\README.txt" />
+    <None Include="Assets\FbxExporters\LICENSE.txt" />
+    <None Include="Assets\FbxExporters\README.txt" />
+    <None Include="Assets\FbxExporters\RELEASE_NOTES.txt" />
+    <None Include="Assets\MeshEditor\LowPolyWeapon\Shaders\AlphaTest-DiffuseBack.shader" />
+    <None Include="Assets\MeshEditor\LowPolyWeapon\Shaders\AlphaTest-DiffuseDoublesided.shader" />
+    <None Include="Assets\MeshEditor\LowPolyWeapon\Sprite Source.txt" />
     <None Include="Assets\PostProcessing\Editor Resources\Monitors\HistogramCompute.compute" />
     <None Include="Assets\PostProcessing\Editor Resources\Monitors\HistogramRender.shader" />
     <None Include="Assets\PostProcessing\Editor Resources\Monitors\ParadeRender.shader" />

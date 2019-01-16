@@ -13,12 +13,14 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile></CompilerResponseFile>
+    <CompilerResponseFile>
+    </CompilerResponseFile>
     <UnityProjectGenerator>VSTU</UnityProjectGenerator>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>WebGL:20</UnityBuildTarget>
     <UnityVersion>2017.4.10f1</UnityVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <LangVersion>4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -221,6 +223,9 @@
     <Reference Include="UnityEngine.SpatialTracking">
       <HintPath>D:/Program Files/Unity/2017.4.10f1/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/RuntimeEditor/UnityEngine.SpatialTracking.dll</HintPath>
     </Reference>
+    <Reference Include="UnityFbxPrefab">
+      <HintPath>Assets/FbxExporters/UnityFbxPrefab.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.Analytics">
       <HintPath>C:/Users/BensonLee/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.analytics@2.0.13/UnityEngine.Analytics.dll</HintPath>
     </Reference>
@@ -238,6 +243,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\MeshEditor\Scripts\GameObjectDeformer.cs" />
+    <Compile Include="Assets\MeshEditor\Scripts\GameObjectDeformerEditor.cs" />
+    <Compile Include="Assets\MeshEditor\Scripts\GizmoScript.cs" />
     <Compile Include="Assets\PostProcessing\Runtime\Attributes\GetSetAttribute.cs" />
     <Compile Include="Assets\PostProcessing\Runtime\Attributes\MinAttribute.cs" />
     <Compile Include="Assets\PostProcessing\Runtime\Attributes\TrackballAttribute.cs" />
@@ -307,13 +315,18 @@
     <Compile Include="Assets\Scripts\Components\Parameters.cs" />
     <Compile Include="Assets\Scripts\Components\Pommel\Pointed.cs" />
     <Compile Include="Assets\Scripts\Components\Pommel\Ring.cs" />
+    <Compile Include="Assets\Scripts\Components\SpearHair.cs" />
     <Compile Include="Assets\Scripts\DataStructures.cs" />
+    <Compile Include="Assets\Scripts\DynamicDeformation\DyDefManager.cs" />
+    <Compile Include="Assets\Scripts\DynamicDeformation\GameStat.cs" />
     <Compile Include="Assets\Scripts\Jian.cs" />
     <Compile Include="Assets\Scripts\Knife1.cs" />
     <Compile Include="Assets\Scripts\Knife2.cs" />
     <Compile Include="Assets\Scripts\Knife3.cs" />
     <Compile Include="Assets\Scripts\KnifeParametric.cs" />
     <Compile Include="Assets\Scripts\ManagerSingleton.cs" />
+    <Compile Include="Assets\Scripts\NeuralNet\NeuralNet.cs" />
+    <Compile Include="Assets\Scripts\NeuralNet\Neuron.cs" />
     <Compile Include="Assets\Scripts\Spear.cs" />
     <Compile Include="Assets\Scripts\Spear1.cs" />
     <Compile Include="Assets\Scripts\Sword1.cs" />
@@ -323,6 +336,14 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\3DForge\Fantasy_Interiors\Villages_&amp;_Towns\Documents\Village_Interiors_User_Guid_v1.3.txt" />
+    <None Include="Assets\FbxExporters\Editor\FbxSdk\LICENSE.txt" />
+    <None Include="Assets\FbxExporters\Editor\FbxSdk\README.txt" />
+    <None Include="Assets\FbxExporters\LICENSE.txt" />
+    <None Include="Assets\FbxExporters\README.txt" />
+    <None Include="Assets\FbxExporters\RELEASE_NOTES.txt" />
+    <None Include="Assets\MeshEditor\LowPolyWeapon\Shaders\AlphaTest-DiffuseBack.shader" />
+    <None Include="Assets\MeshEditor\LowPolyWeapon\Shaders\AlphaTest-DiffuseDoublesided.shader" />
+    <None Include="Assets\MeshEditor\LowPolyWeapon\Sprite Source.txt" />
     <None Include="Assets\PostProcessing\Editor Resources\Monitors\HistogramCompute.compute" />
     <None Include="Assets\PostProcessing\Editor Resources\Monitors\HistogramRender.shader" />
     <None Include="Assets\PostProcessing\Editor Resources\Monitors\ParadeRender.shader" />

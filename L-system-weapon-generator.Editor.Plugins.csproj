@@ -263,6 +263,15 @@
     <Reference Include="SyntaxTree.VisualStudio.Unity.Bridge">
       <HintPath>C:/Program Files (x86)/Microsoft Visual Studio Tools for Unity/15.0/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
     </Reference>
+    <Reference Include="UnityFbxPrefab">
+      <HintPath>Assets/FbxExporters/UnityFbxPrefab.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityFbxExporterEditor">
+      <HintPath>Assets/FbxExporters/Editor/UnityFbxExporterEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityFbxSdk">
+      <HintPath>Assets/FbxExporters/Editor/FbxSdk/Plugins/UnityFbxSdk.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEditor.Advertisements">
       <HintPath>C:/Users/BensonLee/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.ads@2.0.8/Editor/UnityEditor.Advertisements.dll</HintPath>
     </Reference>
@@ -298,6 +307,14 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\3DForge\Fantasy_Interiors\Villages_&amp;_Towns\Documents\Village_Interiors_User_Guid_v1.3.txt" />
+    <None Include="Assets\FbxExporters\Editor\FbxSdk\LICENSE.txt" />
+    <None Include="Assets\FbxExporters\Editor\FbxSdk\README.txt" />
+    <None Include="Assets\FbxExporters\LICENSE.txt" />
+    <None Include="Assets\FbxExporters\README.txt" />
+    <None Include="Assets\FbxExporters\RELEASE_NOTES.txt" />
+    <None Include="Assets\MeshEditor\LowPolyWeapon\Shaders\AlphaTest-DiffuseBack.shader" />
+    <None Include="Assets\MeshEditor\LowPolyWeapon\Shaders\AlphaTest-DiffuseDoublesided.shader" />
+    <None Include="Assets\MeshEditor\LowPolyWeapon\Sprite Source.txt" />
     <None Include="Assets\PostProcessing\Editor Resources\Monitors\HistogramCompute.compute" />
     <None Include="Assets\PostProcessing\Editor Resources\Monitors\HistogramRender.shader" />
     <None Include="Assets\PostProcessing\Editor Resources\Monitors\ParadeRender.shader" />

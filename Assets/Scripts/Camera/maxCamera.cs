@@ -34,6 +34,9 @@ public class maxCamera : MonoBehaviour
     private Quaternion rotation;
     private Vector3 position;
 
+    private Vector3 startPosition, startTargetPosition;
+    private Quaternion startRotation, startTargetRotation;
+
     void Start() { Init(); }
     void OnEnable() { Init(); }
 
@@ -57,6 +60,11 @@ public class maxCamera : MonoBehaviour
         currentRotation = transform.rotation;
         desiredRotation = transform.rotation;
 
+        startPosition = transform.position;
+        startRotation = transform.rotation;
+        startTargetPosition = target.position;
+        startTargetRotation = target.rotation;
+
         xDeg = Vector3.Angle(Vector3.right, transform.right);
         yDeg = Vector3.Angle(Vector3.up, transform.up);
     }
@@ -66,6 +74,15 @@ public class maxCamera : MonoBehaviour
      */
     void LateUpdate()
     {
+        //if (Input.GetKey(KeyCode.R))
+        //{
+        //    transform.position = startPosition;
+        //    transform.rotation = startRotation;
+        //    target.position = startTargetPosition;
+        //    target.rotation = startTargetRotation;
+        //    return;
+        //}
+
         // If Control and Alt and Middle button? ZOOM!
         if (Input.GetMouseButton(2) && Input.GetKey(KeyCode.LeftAlt) && Input.GetKey(KeyCode.LeftControl))
         {
